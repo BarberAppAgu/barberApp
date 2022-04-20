@@ -92,3 +92,34 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+// class SplashScreen extends StatelessWidget {
+//   const SplashScreen({Key? key}) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return AnimatedSplashScreen(
+//       splash: Column(
+//         children: [
+//           Image.asset(
+//             'assets/autoImage.png',
+//             height: 150,
+//             width: (MediaQuery.of(context).size.width) / 2,
+//             fit: BoxFit.cover,
+//           ),
+//           const Text(
+//             "3S AUTO",
+//             style: TextStyle(
+//                 fontSize: 40, fontWeight: FontWeight.bold, color: Colors.white),
+//           )
+//         ],
+//       ),
+//       backgroundColor: Color(0xffffac1c),
+//       nextScreen: ServicesPage(),
+//       splashIconSize: 250,
+//       duration: 2000,
+//       splashTransition: SplashTransition.sizeTransition,
+//       pageTransitionType: PageTransitionType.leftToRightWithFade,
+//       animationDuration: const Duration(seconds: 1),
+//     );
+//   }
+// }
