@@ -9,20 +9,18 @@ class ServicesPage extends StatefulWidget {
   State<ServicesPage> createState() => _ServicesPageState();
 }
 
+enum SingingCharacter { Smart, favorite, Min, Max }
+
 class _ServicesPageState extends State<ServicesPage> {
+  SingingCharacter? _character = SingingCharacter.Smart;
   Color primaryColor = Color(0xffF3F6F4); //gray
   bool isFavorite = true;
+  int chosenSort = 0;
   Map<bool, Color> favorite_colors = {};
-  var name = "Rafi Akaş- Hair Des..";
-  var minPrice = 30;
-  var commentAmount = 100;
-  var amountFav = 70;
-  Color _iconColor = Colors.red;
-
   List<Enterprise> entrprises = [
     Enterprise(70, 30, 'assets/barber2.jpg', false, 'Raif Akkaş', 30),
-    Enterprise(80, 30, 'assets/barber2.jpg', false, 'Kerem Akkaş', 30),
-    Enterprise(50, 30, 'assets/barber2.jpg', false, 'Haöza Akkaş', 50),
+    Enterprise(80, 40, 'assets/barber2.jpg', false, 'Kerem Akkaş', 40),
+    Enterprise(50, 80, 'assets/barber2.jpg', false, 'Haöza Akkaş', 80),
   ];
 
   @override
@@ -43,27 +41,190 @@ class _ServicesPageState extends State<ServicesPage> {
               size: 30,
             ),
             onPressed: () {
-              // do something
+              setState(() {
+                showModalBottomSheet(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    context: context,
+                    builder: (_) => StatefulBuilder(
+                          builder: (BuildContext context, setState) => Stack(
+                            children: [
+                              Container(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: ListView(
+                                    children: [
+                                      SizedBox(
+                                        height: 16,
+                                      ),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            "Sorting",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 17),
+                                          ),
+                                        ],
+                                      ),
+                                      Divider(
+                                        color: Colors.black,
+                                      ),
+                                      ListTile(
+                                        title: const Text(
+                                            'Smart Sorting (default)'),
+                                        leading: Radio<SingingCharacter>(
+                                          value: SingingCharacter.Smart,
+                                          groupValue: _character,
+                                          onChanged: (SingingCharacter? value) {
+                                            setState(() {
+                                              chosenSort = 1;
+                                              _character = value;
+                                            });
+                                          },
+                                        ),
+                                      ),
+                                      ListTile(
+                                        title: const Text('Favorite Rating '),
+                                        leading: Radio<SingingCharacter>(
+                                          value: SingingCharacter.favorite,
+                                          groupValue: _character,
+                                          onChanged: (SingingCharacter? value) {
+                                            setState(() {
+                                              print(value);
+                                              chosenSort = 2;
+                                              _character = value;
+                                            });
+                                          },
+                                        ),
+                                      ),
+                                      ListTile(
+                                        title: const Text('Minimum Price '),
+                                        leading: Radio<SingingCharacter>(
+                                          value: SingingCharacter.Min,
+                                          groupValue: _character,
+                                          onChanged: (SingingCharacter? value) {
+                                            setState(() {
+                                              print(value);
+                                              chosenSort = 3;
+                                              _character = value;
+                                            });
+                                          },
+                                        ),
+                                      ),
+                                      ListTile(
+                                        title: const Text('Maximum Price '),
+                                        leading: Radio<SingingCharacter>(
+                                          value: SingingCharacter.Max,
+                                          groupValue: _character,
+                                          onChanged: (SingingCharacter? value) {
+                                            setState(() {
+                                              print(value);
+                                              chosenSort = 4;
+                                              _character = value;
+                                            });
+                                          },
+                                        ),
+                                      ),
+                                      ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            primary: Color(0xff83D1C3),
+                                          ),
+                                          onPressed: () {
+                                            setState(() {
+                                              if (chosenSort == 1) {
+                                                Navigator.pop(context);
+                                                print(chosenSort);
+                                              } else if (chosenSort == 2) {
+                                             for(int i =0; i<entrprises.length;i++){
+
+                                               for(int j= i+1;j<entrprises.length;j++){
+
+                                                 if(entrprises[i].FavAmount<entrprises[j].FavAmount)
+                                                   entrprises[i]=entrprises[j];
+                                               }
+                                             }
+                                         Navigator.pop(context);
+                                                print(chosenSort);
+                                              } else if (chosenSort == 3) {
+                                                for(int i =0; i<entrprises.length;i++){
+
+                                                  for(int j= i+1;j<entrprises.length;j++){
+
+                                                    if(entrprises[i].fee<entrprises[j].fee)
+                                                      entrprises[i]=entrprises[j];
+                                                  }
+                                                }
+                                                Navigator.pop(context);
+                                                print(chosenSort);
+
+                                              } else if (chosenSort == 4) {
+                                                for(int i =0; i<entrprises.length;i++){
+
+                                                  for(int j= i+1;j<entrprises.length;j++){
+
+                                                    if(entrprises[i].fee>entrprises[j].fee)
+                                                      entrprises[i]=entrprises[j];
+                                                  }
+                                                }
+                                                Navigator.pop(context);
+                                                print(chosenSort);
+                                              }
+                                            });
+                                          },
+                                          child: Container(
+                                            width: size.width * 4 / 5,
+                                            child: Center(
+                                                child: Text(
+                                              "Apply",
+                                              style: TextStyle(fontSize: 20),
+                                            )),
+                                          )),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                top: 0,
+                                left: 0,
+                                right: 0,
+                                child: Padding(
+                                  padding: EdgeInsets.fromLTRB(
+                                    size.width / 2 - 40,
+                                    0,
+                                    size.width / 2 - 40,
+                                    0,
+                                  ),
+                                  child: Divider(
+                                    thickness: 3,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ));
+              });
             },
           )
         ],
       ),
       body: Center(
-          child: ListView.builder(
-        itemBuilder: (context, _) {
-          return entrepriseMethod(
-            size,
-            entrprises[_],
-          );
-        },
-        padding: EdgeInsets.all(8),
-        itemCount: entrprises.length,
-      )),
+        child: ListView.builder(
+          itemBuilder: (context, _) {
+            return entrepriseMethod(
+              size,
+              entrprises[_],
+            );
+          },
+          padding: EdgeInsets.all(8),
+          itemCount: entrprises.length,
+        ),
+      ),
     );
   }
 
-  Padding entrepriseMethod(
-      Size size, Enterprise enterprise) {
+  Padding entrepriseMethod(Size size, Enterprise enterprise) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
@@ -135,7 +296,7 @@ class _ServicesPageState extends State<ServicesPage> {
                               style: TextStyle(color: Color(0xff83D1C3)),
                             ),
                             Text(
-                              "  (${enterprise.CommentNumbersrs}+)",
+                              "  (${enterprise.CommentAmount}+)",
                               style: TextStyle(fontSize: 10),
                             ),
                           ],
@@ -167,12 +328,11 @@ class _ServicesPageState extends State<ServicesPage> {
                                     size: 35,
                                   ),
                             color: Color(0xff83D1C3),
-                            onPressed: () =>
-                                setState(() {
-                                  print(enterprise.isFav);
-                                  enterprise.isFav = !enterprise.isFav;
-                                  print(enterprise.isFav);
-                                }),
+                            onPressed: () => setState(() {
+                              print(enterprise.isFav);
+                              enterprise.isFav = !enterprise.isFav;
+                              print(enterprise.isFav);
+                            }),
                           ),
                         ),
                       ),
@@ -184,4 +344,6 @@ class _ServicesPageState extends State<ServicesPage> {
       ),
     );
   }
+
+// Widget buildSheet() =>
 }
