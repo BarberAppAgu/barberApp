@@ -1,6 +1,9 @@
 import 'package:barber_app/constants.dart';
+import 'package:barber_app/providers/basicUserInfo.dart';
 import 'package:barber_app/screens/customer/cus_home_view.dart';
+import 'package:barber_app/screens/enter/sign_up_view.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 enum SignCondition { signIn, signUp }
 
@@ -80,7 +83,7 @@ class _SignViewState extends State<SignView> {
                         child: TextButton(
                           onPressed: () {},
                           child: Text(
-                            'Forgot Password',
+                            'Forgot Your Password',
                             style: TextStyle(
                               color: kTurquoise,
                             ),
@@ -122,7 +125,20 @@ class _SignViewState extends State<SignView> {
                                 builder: (context) => const CusHomeView(),
                               ),
                             );
-                          } else {}
+                          } else {
+                            Provider.of<BasicUserInfo>(context, listen: false)
+                                .updateEmailAndPassword(
+                                    emailCtr.text, passwordCtr.text);
+                            Provider.of<BasicUserInfo>(context, listen: false)
+                                .updateType(
+                                    isCustomer ? 'Customer' : 'Employer');
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => SignUpView(),
+                              ),
+                            );
+                          }
                         }
                       },
                       child: Container(

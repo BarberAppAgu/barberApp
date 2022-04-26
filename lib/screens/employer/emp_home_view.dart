@@ -12,7 +12,7 @@ class _EmpHomeViewState extends State<EmpHomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Employer Home Viewww'),
+        title: const Text('Employer Home View'),
       ),
     );
   }
