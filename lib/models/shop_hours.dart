@@ -1,9 +1,9 @@
-class WorkHours {
+class ShopHours {
   String day;
   String startTime;
   String endTime;
 
-  WorkHours({
+  ShopHours({
     required this.day,
     required this.startTime,
     required this.endTime,

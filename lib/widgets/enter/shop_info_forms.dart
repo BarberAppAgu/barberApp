@@ -1,12 +1,16 @@
 import 'dart:io';
 
+import 'package:barber_app/models/shop_hours.dart';
+import 'package:barber_app/providers/shop_hours_info.dart';
+import 'package:barber_app/providers/shop_info.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants.dart';
+import '../../models/shop.dart';
 import '../../providers/basicUserInfo.dart';
-import '../../services/google_maps.dart';
+import '../../screens/enter/google_maps_view.dart';
 
 class ShopInformationForms extends StatefulWidget {
   Function callback;
@@ -47,8 +51,21 @@ class _ShopInformationFormsState extends State<ShopInformationForms> {
   String sundayEndDropDown = '23.00';
   List<String> times = ['08.00', '08.30', '09.00', '20.00', '23.00'];
 
+  List<ShopHours> newShopHoursList = [];
+
   final ImagePicker _picker = ImagePicker();
   File? imageFile;
+
+  @override
+  void initState() {
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      setState(() {
+        setShopHours(context);
+        setShopInfo(context);
+      });
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -123,8 +140,8 @@ class _ShopInformationFormsState extends State<ShopInformationForms> {
         ),
         GestureDetector(
           onTap: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => MapSample()));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => GoogleMapsView()));
           },
           child: Container(
             margin: EdgeInsets.symmetric(horizontal: 16),
@@ -162,12 +179,25 @@ class _ShopInformationFormsState extends State<ShopInformationForms> {
           ),
           child: Column(
             children: [
+              /// Monday
               Row(
                 children: [
                   Switch(
                     value: isMonday,
                     activeColor: kTurquoise,
                     onChanged: (_val) {
+                      if (!_val) {
+                        newShopHoursList.removeWhere(
+                            (shopHour) => shopHour.day == 'Monday');
+                      } else {
+                        newShopHoursList.add(
+                          ShopHours(
+                            day: 'Monday',
+                            startTime: mondayStartDropDown,
+                            endTime: mondayEndDropDown,
+                          ),
+                        );
+                      }
                       setState(() {
                         isMonday = _val;
                       });
@@ -177,7 +207,7 @@ class _ShopInformationFormsState extends State<ShopInformationForms> {
                     'Monday',
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: 16,
+                      fontSize: 14,
                     ),
                   ),
                   Spacer(),
@@ -195,6 +225,12 @@ class _ShopInformationFormsState extends State<ShopInformationForms> {
                       onChanged: (String? newValue) {
                         setState(() {
                           mondayStartDropDown = newValue!;
+                          for (int i = 0; i < newShopHoursList.length; i++) {
+                            if (newShopHoursList[i].day == 'Monday') {
+                              newShopHoursList[i].startTime =
+                                  mondayStartDropDown;
+                            }
+                          }
                           print(newValue);
                         });
                       },
@@ -230,6 +266,11 @@ class _ShopInformationFormsState extends State<ShopInformationForms> {
                       onChanged: (String? newValue) {
                         setState(() {
                           mondayEndDropDown = newValue!;
+                          for (int i = 0; i < newShopHoursList.length; i++) {
+                            if (newShopHoursList[i].day == 'Monday') {
+                              newShopHoursList[i].endTime = mondayEndDropDown;
+                            }
+                          }
                           print(newValue);
                         });
                       },
@@ -250,12 +291,26 @@ class _ShopInformationFormsState extends State<ShopInformationForms> {
                   ),
                 ],
               ),
+
+              /// Tuesday
               Row(
                 children: [
                   Switch(
                     value: isTuesday,
                     activeColor: kTurquoise,
                     onChanged: (_val) {
+                      if (!_val) {
+                        newShopHoursList.removeWhere(
+                            (shopHour) => shopHour.day == 'Tuesday');
+                      } else {
+                        newShopHoursList.add(
+                          ShopHours(
+                            day: 'Tuesday',
+                            startTime: tuesdayStartDropDown,
+                            endTime: tuesdayEndDropDown,
+                          ),
+                        );
+                      }
                       setState(() {
                         isTuesday = _val;
                       });
@@ -265,7 +320,7 @@ class _ShopInformationFormsState extends State<ShopInformationForms> {
                     'Tuesday',
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: 16,
+                      fontSize: 14,
                     ),
                   ),
                   Spacer(),
@@ -283,6 +338,12 @@ class _ShopInformationFormsState extends State<ShopInformationForms> {
                       onChanged: (String? newValue) {
                         setState(() {
                           tuesdayStartDropDown = newValue!;
+                          for (int i = 0; i < newShopHoursList.length; i++) {
+                            if (newShopHoursList[i].day == 'Tuesday') {
+                              newShopHoursList[i].startTime =
+                                  tuesdayStartDropDown;
+                            }
+                          }
                           print(newValue);
                         });
                       },
@@ -318,6 +379,11 @@ class _ShopInformationFormsState extends State<ShopInformationForms> {
                       onChanged: (String? newValue) {
                         setState(() {
                           tuesdayEndDropDown = newValue!;
+                          for (int i = 0; i < newShopHoursList.length; i++) {
+                            if (newShopHoursList[i].day == 'Tuesday') {
+                              newShopHoursList[i].endTime = tuesdayEndDropDown;
+                            }
+                          }
                           print(newValue);
                         });
                       },
@@ -338,12 +404,26 @@ class _ShopInformationFormsState extends State<ShopInformationForms> {
                   ),
                 ],
               ),
+
+              /// Wednesday
               Row(
                 children: [
                   Switch(
                     value: isWednesday,
                     activeColor: kTurquoise,
                     onChanged: (_val) {
+                      if (!_val) {
+                        newShopHoursList.removeWhere(
+                            (shopHour) => shopHour.day == 'Wednesday');
+                      } else {
+                        newShopHoursList.add(
+                          ShopHours(
+                            day: 'Wednesday',
+                            startTime: wednesdayStartDropDown,
+                            endTime: wednesdayEndDropDown,
+                          ),
+                        );
+                      }
                       setState(() {
                         isWednesday = _val;
                       });
@@ -353,7 +433,7 @@ class _ShopInformationFormsState extends State<ShopInformationForms> {
                     'Wednesday',
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: 16,
+                      fontSize: 14,
                     ),
                   ),
                   Spacer(),
@@ -371,6 +451,12 @@ class _ShopInformationFormsState extends State<ShopInformationForms> {
                       onChanged: (String? newValue) {
                         setState(() {
                           wednesdayStartDropDown = newValue!;
+                          for (int i = 0; i < newShopHoursList.length; i++) {
+                            if (newShopHoursList[i].day == 'Wednesday') {
+                              newShopHoursList[i].startTime =
+                                  wednesdayStartDropDown;
+                            }
+                          }
                           print(newValue);
                         });
                       },
@@ -406,6 +492,12 @@ class _ShopInformationFormsState extends State<ShopInformationForms> {
                       onChanged: (String? newValue) {
                         setState(() {
                           wednesdayEndDropDown = newValue!;
+                          for (int i = 0; i < newShopHoursList.length; i++) {
+                            if (newShopHoursList[i].day == 'Wednesday') {
+                              newShopHoursList[i].endTime =
+                                  wednesdayEndDropDown;
+                            }
+                          }
                           print(newValue);
                         });
                       },
@@ -426,12 +518,26 @@ class _ShopInformationFormsState extends State<ShopInformationForms> {
                   ),
                 ],
               ),
+
+              /// Thursday
               Row(
                 children: [
                   Switch(
                     value: isThursday,
                     activeColor: kTurquoise,
                     onChanged: (_val) {
+                      if (!_val) {
+                        newShopHoursList.removeWhere(
+                            (shopHour) => shopHour.day == 'Thursday');
+                      } else {
+                        newShopHoursList.add(
+                          ShopHours(
+                            day: 'Thursday',
+                            startTime: thursdayStartDropDown,
+                            endTime: thursdayEndDropDown,
+                          ),
+                        );
+                      }
                       setState(() {
                         isThursday = _val;
                       });
@@ -441,7 +547,7 @@ class _ShopInformationFormsState extends State<ShopInformationForms> {
                     'Thursday',
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: 16,
+                      fontSize: 14,
                     ),
                   ),
                   Spacer(),
@@ -459,6 +565,12 @@ class _ShopInformationFormsState extends State<ShopInformationForms> {
                       onChanged: (String? newValue) {
                         setState(() {
                           thursdayStartDropDown = newValue!;
+                          for (int i = 0; i < newShopHoursList.length; i++) {
+                            if (newShopHoursList[i].day == 'Thursday') {
+                              newShopHoursList[i].startTime =
+                                  thursdayStartDropDown;
+                            }
+                          }
                           print(newValue);
                         });
                       },
@@ -494,6 +606,11 @@ class _ShopInformationFormsState extends State<ShopInformationForms> {
                       onChanged: (String? newValue) {
                         setState(() {
                           thursdayEndDropDown = newValue!;
+                          for (int i = 0; i < newShopHoursList.length; i++) {
+                            if (newShopHoursList[i].day == 'Thursday') {
+                              newShopHoursList[i].endTime = thursdayEndDropDown;
+                            }
+                          }
                           print(newValue);
                         });
                       },
@@ -514,12 +631,26 @@ class _ShopInformationFormsState extends State<ShopInformationForms> {
                   ),
                 ],
               ),
+
+              /// Friday
               Row(
                 children: [
                   Switch(
                     value: isFriday,
                     activeColor: kTurquoise,
                     onChanged: (_val) {
+                      if (!_val) {
+                        newShopHoursList.removeWhere(
+                            (shopHour) => shopHour.day == 'Friday');
+                      } else {
+                        newShopHoursList.add(
+                          ShopHours(
+                            day: 'Friday',
+                            startTime: fridayStartDropDown,
+                            endTime: fridayEndDropDown,
+                          ),
+                        );
+                      }
                       setState(() {
                         isFriday = _val;
                       });
@@ -529,7 +660,7 @@ class _ShopInformationFormsState extends State<ShopInformationForms> {
                     'Friday',
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: 16,
+                      fontSize: 14,
                     ),
                   ),
                   Spacer(),
@@ -547,6 +678,12 @@ class _ShopInformationFormsState extends State<ShopInformationForms> {
                       onChanged: (String? newValue) {
                         setState(() {
                           fridayStartDropDown = newValue!;
+                          for (int i = 0; i < newShopHoursList.length; i++) {
+                            if (newShopHoursList[i].day == 'Friday') {
+                              newShopHoursList[i].startTime =
+                                  fridayStartDropDown;
+                            }
+                          }
                           print(newValue);
                         });
                       },
@@ -582,6 +719,11 @@ class _ShopInformationFormsState extends State<ShopInformationForms> {
                       onChanged: (String? newValue) {
                         setState(() {
                           fridayEndDropDown = newValue!;
+                          for (int i = 0; i < newShopHoursList.length; i++) {
+                            if (newShopHoursList[i].day == 'Friday') {
+                              newShopHoursList[i].endTime = fridayEndDropDown;
+                            }
+                          }
                           print(newValue);
                         });
                       },
@@ -602,12 +744,26 @@ class _ShopInformationFormsState extends State<ShopInformationForms> {
                   ),
                 ],
               ),
+
+              /// Saturday
               Row(
                 children: [
                   Switch(
                     value: isSaturday,
                     activeColor: kTurquoise,
                     onChanged: (_val) {
+                      if (!_val) {
+                        newShopHoursList.removeWhere(
+                            (shopHour) => shopHour.day == 'Saturday');
+                      } else {
+                        newShopHoursList.add(
+                          ShopHours(
+                            day: 'Saturday',
+                            startTime: saturdayStartDropDown,
+                            endTime: saturdayEndDropDown,
+                          ),
+                        );
+                      }
                       setState(() {
                         isSaturday = _val;
                       });
@@ -617,7 +773,7 @@ class _ShopInformationFormsState extends State<ShopInformationForms> {
                     'Saturday',
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: 16,
+                      fontSize: 14,
                     ),
                   ),
                   Spacer(),
@@ -635,6 +791,12 @@ class _ShopInformationFormsState extends State<ShopInformationForms> {
                       onChanged: (String? newValue) {
                         setState(() {
                           saturdayStartDropDown = newValue!;
+                          for (int i = 0; i < newShopHoursList.length; i++) {
+                            if (newShopHoursList[i].day == 'Saturday') {
+                              newShopHoursList[i].startTime =
+                                  saturdayStartDropDown;
+                            }
+                          }
                           print(newValue);
                         });
                       },
@@ -670,6 +832,11 @@ class _ShopInformationFormsState extends State<ShopInformationForms> {
                       onChanged: (String? newValue) {
                         setState(() {
                           saturdayEndDropDown = newValue!;
+                          for (int i = 0; i < newShopHoursList.length; i++) {
+                            if (newShopHoursList[i].day == 'Saturday') {
+                              newShopHoursList[i].endTime = saturdayEndDropDown;
+                            }
+                          }
                           print(newValue);
                         });
                       },
@@ -690,12 +857,26 @@ class _ShopInformationFormsState extends State<ShopInformationForms> {
                   ),
                 ],
               ),
+
+              /// Sunday
               Row(
                 children: [
                   Switch(
                     value: isSunday,
                     activeColor: kTurquoise,
                     onChanged: (_val) {
+                      if (!_val) {
+                        newShopHoursList.removeWhere(
+                            (shopHour) => shopHour.day == 'Sunday');
+                      } else {
+                        newShopHoursList.add(
+                          ShopHours(
+                            day: 'Sunday',
+                            startTime: sundayStartDropDown,
+                            endTime: sundayEndDropDown,
+                          ),
+                        );
+                      }
                       setState(() {
                         isSunday = _val;
                       });
@@ -705,7 +886,7 @@ class _ShopInformationFormsState extends State<ShopInformationForms> {
                     'Sunday',
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: 16,
+                      fontSize: 14,
                     ),
                   ),
                   Spacer(),
@@ -723,6 +904,12 @@ class _ShopInformationFormsState extends State<ShopInformationForms> {
                       onChanged: (String? newValue) {
                         setState(() {
                           sundayStartDropDown = newValue!;
+                          for (int i = 0; i < newShopHoursList.length; i++) {
+                            if (newShopHoursList[i].day == 'Sunday') {
+                              newShopHoursList[i].startTime =
+                                  sundayStartDropDown;
+                            }
+                          }
                           print(newValue);
                         });
                       },
@@ -758,6 +945,11 @@ class _ShopInformationFormsState extends State<ShopInformationForms> {
                       onChanged: (String? newValue) {
                         setState(() {
                           sundayEndDropDown = newValue!;
+                          for (int i = 0; i < newShopHoursList.length; i++) {
+                            if (newShopHoursList[i].day == 'Sunday') {
+                              newShopHoursList[i].endTime = sundayEndDropDown;
+                            }
+                          }
                           print(newValue);
                         });
                       },
@@ -826,7 +1018,12 @@ class _ShopInformationFormsState extends State<ShopInformationForms> {
                                   final XFile? image = await _picker.pickImage(
                                       source: ImageSource.camera);
                                   if (image != null) {
-                                    imageFile = File(image.path);
+                                    setState(() {
+                                      imageFile = File(image.path);
+                                      Provider.of<ShopInfo>(context,
+                                              listen: false)
+                                          .updateShopImage(imageFile);
+                                    });
                                   }
                                 },
                                 child: Text(
@@ -843,6 +1040,9 @@ class _ShopInformationFormsState extends State<ShopInformationForms> {
                                   if (image != null) {
                                     setState(() {
                                       imageFile = File(image.path);
+                                      Provider.of<ShopInfo>(context,
+                                              listen: false)
+                                          .updateShopImage(imageFile);
                                     });
                                   }
                                 },
@@ -863,7 +1063,7 @@ class _ShopInformationFormsState extends State<ShopInformationForms> {
                 child: Container(
                   width: 48,
                   height: 48,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     borderRadius: BorderRadius.only(
                       topRight: Radius.circular(16),
                       bottomLeft: Radius.circular(16),
@@ -885,12 +1085,29 @@ class _ShopInformationFormsState extends State<ShopInformationForms> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             GestureDetector(
-              onTap: () {
+              onTap: () async {
                 if (Provider.of<BasicUserInfo>(context, listen: false)
                         .basicUser
                         .type ==
                     'Employer') {
-                  widget.callback(3);
+                  if (typeOfShopDropDownValue == 'Type Of Shop' ||
+                      shopNameCtr.text.isEmpty ||
+                      addressCtr.text.isEmpty ||
+                      Provider.of<ShopInfo>(context, listen: false).shop.lat ==
+                          0.0 ||
+                      Provider.of<ShopInfo>(context, listen: false).shop.lng ==
+                          0.0 ||
+                      imageFile == null) {
+                    await _showMyDialog(
+                        'Error', 'Please fill and select all space');
+                  } else {
+                    Provider.of<ShopInfo>(context, listen: false)
+                        .updateShopInformation(typeOfShopDropDownValue,
+                            shopNameCtr.text, addressCtr.text);
+                    Provider.of<ShopHoursInfo>(context, listen: false)
+                        .updateShopHourList(newShopHoursList);
+                    widget.callback(3);
+                  }
                 }
               },
               child: Container(
@@ -954,6 +1171,86 @@ class _ShopInformationFormsState extends State<ShopInformationForms> {
           ),
         ),
       ),
+    );
+  }
+
+  void setShopHours(BuildContext context) {
+    for (ShopHours shopHour
+        in Provider.of<ShopHoursInfo>(context, listen: false).shopHoursList) {
+      print(shopHour.day + " " + shopHour.startTime + " " + shopHour.endTime);
+      newShopHoursList.add(shopHour);
+      if (shopHour.day == 'Monday') {
+        isMonday = true;
+        mondayStartDropDown = shopHour.startTime;
+        mondayEndDropDown = shopHour.endTime;
+      } else if (shopHour.day == 'Tuesday') {
+        isTuesday = true;
+        tuesdayStartDropDown = shopHour.startTime;
+        tuesdayEndDropDown = shopHour.endTime;
+      }
+      if (shopHour.day == 'Wednesday') {
+        isWednesday = true;
+        wednesdayStartDropDown = shopHour.startTime;
+        wednesdayEndDropDown = shopHour.endTime;
+      }
+      if (shopHour.day == 'Thursday') {
+        isThursday = true;
+        thursdayStartDropDown = shopHour.startTime;
+        thursdayEndDropDown = shopHour.endTime;
+      }
+      if (shopHour.day == 'Friday') {
+        isFriday = true;
+        fridayStartDropDown = shopHour.startTime;
+        fridayEndDropDown = shopHour.endTime;
+      }
+      if (shopHour.day == 'Saturday') {
+        isSaturday = true;
+        saturdayStartDropDown = shopHour.startTime;
+        saturdayEndDropDown = shopHour.endTime;
+      }
+      if (shopHour.day == 'Sunday') {
+        isSunday = true;
+        sundayStartDropDown = shopHour.startTime;
+        sundayEndDropDown = shopHour.endTime;
+      }
+    }
+  }
+
+  void setShopInfo(BuildContext context) {
+    Shop oldShopInfo = Provider.of<ShopInfo>(context, listen: false).shop;
+    shopNameCtr.text = oldShopInfo.name;
+    addressCtr.text = oldShopInfo.address;
+    typeOfShopDropDownValue = oldShopInfo.typeOfShop;
+    imageFile = Provider.of<ShopInfo>(context, listen: false).imageFile;
+  }
+
+  Future<void> _showMyDialog(String title, String detail) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(detail),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              style: TextButton.styleFrom(
+                primary: kTurquoise,
+              ),
+              child: const Text('Approve'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

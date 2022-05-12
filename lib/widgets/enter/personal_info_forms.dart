@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants.dart';
+import '../../models/basicUser.dart';
 
 class PersonalInfoForms extends StatefulWidget {
   Function callback;
@@ -22,6 +23,16 @@ class _PersonalInfoFormsState extends State<PersonalInfoForms> {
 
   String cityDropDownValue = 'Select City';
   String genderDropDownValue = 'Select Gender';
+
+  @override
+  void initState() {
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      setState(() {
+        setPersonalInfo(context);
+      });
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -155,7 +166,24 @@ class _PersonalInfoFormsState extends State<PersonalInfoForms> {
                           .basicUser
                           .type ==
                       'Employer') {
-                    widget.callback(2);
+                    Provider.of<BasicUserInfo>(context, listen: false)
+                        .updateGeneralUserInfo(
+                            nameCtr.text,
+                            surnameCtr.text,
+                            cityDropDownValue,
+                            genderDropDownValue,
+                            birthdayCtr.text,
+                            phoneNoCtr.text);
+                    if (nameCtr.text.isEmpty ||
+                        surnameCtr.text.isEmpty ||
+                        cityDropDownValue == 'Select City' ||
+                        genderDropDownValue == 'Select Gender' ||
+                        birthdayCtr.text.isEmpty ||
+                        phoneNoCtr.text.isEmpty) {
+                      _showMyDialog('Error', 'Please fill all fields.');
+                    } else {
+                      widget.callback(2);
+                    }
                   }
                 },
                 child: Container(
@@ -223,5 +251,49 @@ class _PersonalInfoFormsState extends State<PersonalInfoForms> {
         ),
       ),
     );
+  }
+
+  Future<void> _showMyDialog(String title, String detail) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(detail),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              style: TextButton.styleFrom(
+                primary: kTurquoise,
+              ),
+              child: const Text('Approve'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void setPersonalInfo(BuildContext context) {
+    if (Provider.of<BasicUserInfo>(context, listen: false).basicUser.name !=
+        'TestName') {
+      BasicUser basicUser =
+          Provider.of<BasicUserInfo>(context, listen: false).basicUser;
+      nameCtr.text = basicUser.name;
+      surnameCtr.text = basicUser.surname;
+      cityDropDownValue = basicUser.city;
+      genderDropDownValue = basicUser.gender;
+      birthdayCtr.text = basicUser.birthday;
+      phoneNoCtr.text = basicUser.phoneNumber;
+    }
   }
 }

@@ -1,9 +1,10 @@
 import 'package:barber_app/constants.dart';
-import 'package:barber_app/providers/basicUserInfo.dart';
 import 'package:barber_app/screens/customer/cus_home_view.dart';
 import 'package:barber_app/screens/enter/sign_up_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../providers/basicUserInfo.dart';
 
 enum SignCondition { signIn, signUp }
 
@@ -126,12 +127,15 @@ class _SignViewState extends State<SignView> {
                               ),
                             );
                           } else {
+                            print('Hello1');
                             Provider.of<BasicUserInfo>(context, listen: false)
                                 .updateEmailAndPassword(
                                     emailCtr.text, passwordCtr.text);
+                            print('Hello2');
                             Provider.of<BasicUserInfo>(context, listen: false)
                                 .updateType(
                                     isCustomer ? 'Customer' : 'Employer');
+                            print('Hello3');
                             Navigator.push(
                               context,
                               MaterialPageRoute(
