@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 
 import '../../constants.dart';
 import '../../providers/basicUserInfo.dart';
+import '../../services/google_maps.dart';
 
 class ShopInformationForms extends StatefulWidget {
   Function callback;
@@ -120,17 +121,23 @@ class _ShopInformationFormsState extends State<ShopInformationForms> {
             ),
           ),
         ),
-        Container(
-          margin: EdgeInsets.symmetric(horizontal: 16),
-          height: size.width / 3,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(
-              color: kTurquoise,
-            ),
-            image: DecorationImage(
-              image: AssetImage('assets/image/map_photo.PNG'),
-              fit: BoxFit.cover,
+        GestureDetector(
+          onTap: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => MapSample()));
+          },
+          child: Container(
+            margin: EdgeInsets.symmetric(horizontal: 16),
+            height: size.width / 3,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(
+                color: kTurquoise,
+              ),
+              image: DecorationImage(
+                image: AssetImage('assets/image/map_photo.PNG'),
+                fit: BoxFit.cover,
+              ),
             ),
           ),
         ),
