@@ -28,7 +28,7 @@ class uShopInfoPage extends StatelessWidget {
             //height: 120,
             // width: 100,
               height: MediaQuery.of(context).size.width*0.25,
-              child: Image.asset("assets/r.png")),
+              child: Image.asset("assets/image/logo.png")),
           centerTitle: true,
           actions: <Widget>[
             Padding(
@@ -149,7 +149,7 @@ class _uShopInfo2State extends State<uShopInfo2> {
 
               Align(
                   alignment: Alignment.topLeft,
-                  child: Text("Company name",style: TextStyle(color: Colors.black,fontSize: MediaQuery.of(context).size.height*0.03),))
+                  child: Text("",style: TextStyle(color: Colors.black,fontSize: MediaQuery.of(context).size.height*0.03),))
             ],
           ),
         ),

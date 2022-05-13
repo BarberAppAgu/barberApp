@@ -27,7 +27,7 @@ class Secondp extends StatelessWidget {
             //height: 120,
             // width: 100,
               height: MediaQuery.of(context).size.width*0.25,
-              child: Image.asset("assets/r.png")),
+              child: Image.asset("assets/image/logo.png")),
           centerTitle: true,
           actions: <Widget>[
             Padding(
