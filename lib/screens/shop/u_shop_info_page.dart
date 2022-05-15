@@ -1,6 +1,7 @@
 import 'package:barber_app/models/u_shop_about.dart';
 import 'package:barber_app/models/u_shop_comments.dart';
 import 'package:barber_app/models/u_shop_services.dart';
+import 'package:barber_app/screens/customer/cus_choose_personal%20_view.dart';
 import 'package:flutter/material.dart';
 
 
@@ -22,7 +23,7 @@ class uShopInfoPage extends StatelessWidget {
               ),
               preferredSize: const Size.fromHeight(4.0)),
           elevation: 0,
-          leading: IconButton(icon:Icon(Icons.arrow_back_ios_new,color: Colors.black) ,onPressed:() =>null,),
+          leading: IconButton(icon:Icon(Icons.arrow_back_ios_new,color: Colors.black) ,onPressed:() =>Navigator.pop(context),),
           backgroundColor: Color(0xffe5e5e5),
           title: SizedBox(
             //height: 120,
@@ -201,7 +202,7 @@ class _uShopInfo2State extends State<uShopInfo2> {
               ],
             ),
 
-            trailing: IconButton(icon: Icon(Icons.add),onPressed: ()=>null),
+            trailing: IconButton(icon: Icon(Icons.add),onPressed: ()=>Navigator.push(context, MaterialPageRoute(builder: (context) => MyHomePage()))),
 
 
 

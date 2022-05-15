@@ -158,7 +158,7 @@ class _WorkerInfoFormsState extends State<WorkerInfoForms> {
           onPressed: () async {
             bool isSameName = false;
             for (Worker oldWorker
-                in Provider.of<WorkerInfo>(context, listen: false).allService) {
+                in Provider.of<WorkerInfo>(context, listen: false).allWorker) {
               if (oldWorker.name == workerNameCtr.text) {
                 isSameName = true;
               }
@@ -358,7 +358,7 @@ class _WorkerInfoFormsState extends State<WorkerInfoForms> {
 
   void setWorkerList(BuildContext context) {
     workers = Provider.of<WorkerInfo>(context, listen: false)
-        .allService
+        .allWorker
         .map((e) => e as dynamic)
         .toList();
     workers.add('Adding');

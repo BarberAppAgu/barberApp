@@ -6,6 +6,7 @@ class Shop {
   double lng;
   int favNum;
   String imgUrl;
+  int user_id;
 
   Shop({
     required this.typeOfShop,
@@ -15,5 +16,6 @@ class Shop {
     required this.lng,
     required this.favNum,
     required this.imgUrl,
+    required this.user_id,
   });
 }
