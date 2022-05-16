@@ -2,8 +2,7 @@
 import 'package:barber_app/screens/customer/cus_create_appointment.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_horizontal_calendar/animated_horizontal_calendar.dart';
-import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
-
+import 'package:time_range/time_range.dart';
 import '../../constants.dart';
 
 
@@ -72,14 +71,14 @@ class _TimeSelectionPageState extends State<TimeSelectionPage> {
                   fontSize: height*0.030
                 ),)),
             ),
-            Container(
+            SizedBox(
               height: height*0.20,
               child: AnimatedHorizontalCalendar(
-                  unSelectedBoxShadow: BoxShadow(
+                  unSelectedBoxShadow: const BoxShadow(
                     color: kButtonColor
                   ),
                   tableCalenderButtonColor: kButtonColor,
-                  tableCalenderIcon: Icon(
+                  tableCalenderIcon: const Icon(
                     Icons.calendar_today,
                     color: Colors.white,
                   ),
@@ -90,8 +89,8 @@ class _TimeSelectionPageState extends State<TimeSelectionPage> {
                   backgroundColor: Colors.white,
                   tableCalenderThemeData: ThemeData.light().copyWith(
                     primaryColor: Colors.yellow,
-                    buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.normal),
-                    colorScheme: ColorScheme.light(primary: kButtonColor)
+                    buttonTheme: const ButtonThemeData(textTheme: ButtonTextTheme.normal),
+                    colorScheme: const ColorScheme.light(primary: kButtonColor)
                         .copyWith(secondary: kButtonColor),
                   ),
                   selectedColor: kButtonColor,
@@ -99,26 +98,27 @@ class _TimeSelectionPageState extends State<TimeSelectionPage> {
                     selectedDate = date;
                   }),
             ),
+            const SizedBox(height: 40,),
+            TimeRange(
+              fromTitle: const Text('From', style: TextStyle(fontSize: 18, color: Colors.black),),
+              toTitle: const Text('To', style: TextStyle(fontSize: 18, color: Colors.black),),
+              titlePadding: 20,
+              textStyle: const TextStyle(fontWeight: FontWeight.normal, color: Colors.black87),
+              activeTextStyle: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+              borderColor: Colors.grey,
+              backgroundColor: Colors.transparent,
+              activeBackgroundColor: kButtonColor,
+              activeBorderColor: Colors.grey,
+              firstTime: const TimeOfDay(hour: 08, minute: 00),
+              lastTime: const TimeOfDay(hour: 24, minute: 00),
+              timeStep: 60,
+              timeBlock: 30,
+              onRangeCompleted: (range) => setState(() => print(range)),
 
-            Padding(
-              padding: const EdgeInsets.only(top: 16.0),
-              child: Container(
-                width: width*0.7,
-                  height: height*0.4,
-                  decoration: BoxDecoration(
-                    color: kButtonColor,
-                    borderRadius: BorderRadius.circular(5),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey,
-                        blurRadius: 4,
-                        offset: Offset(2, 4), // Shadow position
-                      ),
-                    ],
-                  ),
-                  child: hourMinute12HCustomStyle()
-              ),
             ),
+
+
+
 
 
           ],
@@ -126,28 +126,6 @@ class _TimeSelectionPageState extends State<TimeSelectionPage> {
       ),
 
 
-    );
-  }
-  Widget hourMinute12HCustomStyle(){
-    return new TimePickerSpinner(
-      is24HourMode: false,
-      normalTextStyle: TextStyle(
-          fontSize: 24,
-          color: Colors.black
-      ),
-      highlightedTextStyle: TextStyle(
-          fontSize: 24,
-          color: Colors.white
-      ),
-      spacing: 40,
-      itemHeight: 80,
-      isForce2Digits: true,
-      minutesInterval: 60,
-      onTimeChange: (time) {
-        setState(() {
-          _dateTime = time;
-        });
-      },
     );
   }
 }

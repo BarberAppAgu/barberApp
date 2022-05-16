@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:barber_app/screens/customer/cus_edit_profile_view.dart';
 import 'package:barber_app/screens/customer/cus_favorite_view.dart';
+import 'package:barber_app/screens/customer/cus_home_view.dart';
 import 'package:barber_app/screens/customer/cus_reservation_view.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -22,7 +23,7 @@ class _CusProfileViewState extends State<CusProfileView> {
     final height = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      drawer: Drawer(
+      endDrawer: Drawer(
         backgroundColor: kBackgroundColor,
         child: ListView(
           children: [
@@ -88,6 +89,10 @@ class _CusProfileViewState extends State<CusProfileView> {
         ),
       ),
       appBar: AppBar(
+        leading: IconButton(onPressed: (){
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => CusHomeView()));
+        }, icon:Icon(Icons.arrow_back_ios),),
         centerTitle: true,
         iconTheme: const IconThemeData(
           color: Colors.black,

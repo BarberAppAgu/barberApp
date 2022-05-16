@@ -21,6 +21,7 @@ class _CusHomeViewState extends State<CusHomeView> {
     return Scaffold(
       backgroundColor: kBackgroundColor,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         actions: [
           IconButton(
             icon: const FaIcon(FontAwesomeIcons.solidCircleUser),
