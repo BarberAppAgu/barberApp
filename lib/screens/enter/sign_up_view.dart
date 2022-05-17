@@ -1,7 +1,14 @@
 import 'package:barber_app/constants.dart';
 import 'package:barber_app/models/service.dart';
+import 'package:barber_app/models/shop_hours.dart';
+import 'package:barber_app/models/worker.dart';
+import 'package:barber_app/models/worker_hour.dart';
 import 'package:barber_app/providers/basicUserInfo.dart';
+import 'package:barber_app/providers/service_info.dart';
+import 'package:barber_app/providers/shop_hours_info.dart';
 import 'package:barber_app/providers/shop_info.dart';
+import 'package:barber_app/providers/worker_hour_info.dart';
+import 'package:barber_app/providers/worker_info.dart';
 import 'package:barber_app/services/server_handler.dart';
 import 'package:barber_app/widgets/enter/worker_info_forms.dart';
 import 'package:flutter/material.dart';
@@ -155,17 +162,7 @@ class _SignUpViewState extends State<SignUpView> {
               ? FloatingActionButton(
                   backgroundColor: kTurquoise,
                   onPressed: () async {
-                    print(Provider.of<ShopInfo>(context, listen: false)
-                        .shop
-                        .favNum
-                        .toString());
-
-                    /// Adding Shop to DB
-                    Map<dynamic, dynamic>? resultMap = await ServerHandler()
-                        .addNewShop(
-                            shop: Provider.of<ShopInfo>(context, listen: false)
-                                .shop);
-                    // await _showMyDialog(resultMap!);
+                    await sendDataToAPI();
                   },
                   child: const Text('Finish'),
                 )
@@ -197,6 +194,83 @@ class _SignUpViewState extends State<SignUpView> {
         ),
       ),
     );
+  }
+
+  Future<void> sendDataToAPI() async {
+    /// Adding User
+    print('Adding User');
+    Map<dynamic, dynamic>? resultMapRegisterUser = await ServerHandler()
+        .registerUser(
+            Provider.of<BasicUserInfo>(context, listen: false).basicUser);
+
+    /// Taking user_id from new user
+    print('Taking user_id from new user');
+    Map<dynamic, dynamic>? resultMapOneUser = await ServerHandler()
+        .fetchOneUser(
+            Provider.of<BasicUserInfo>(context, listen: false).basicUser.email);
+    int currentUserId = int.parse(resultMapOneUser!['user']['user_id']);
+    Provider.of<ShopInfo>(context, listen: false)
+        .updateShopUserId(currentUserId);
+
+    /// Adding Shop to DB
+    print('Adding Shop to DB');
+    Map<dynamic, dynamic>? resultMapAddingShop = await ServerHandler()
+        .addNewShop(shop: Provider.of<ShopInfo>(context, listen: false).shop);
+
+    /// Taking shop_id from new shop
+    print('Taking shop_id from new shop');
+    Map<dynamic, dynamic>? resultMapOneShop =
+        await ServerHandler().fetchOneShop(currentUserId);
+    int currentShopId = int.parse(resultMapOneShop!['shop']['shop_id']);
+
+    /// Update shop_id in User Table
+    print('Update shop_id in User Table');
+    Map<dynamic, dynamic>? resultMapUpdateShopIdInUser =
+        await ServerHandler().updateUserForShopId(currentShopId, currentUserId);
+
+    /// Send Worker Info In Loop
+    print('Send Worker Info In Loop');
+    for (Worker worker
+        in Provider.of<WorkerInfo>(context, listen: false).allWorker) {
+      print('Add new Worker');
+      Map<dynamic, dynamic>? resultMapAddWorker = await ServerHandler()
+          .addNewWorker(worker: worker, shop_id: currentShopId);
+      print('Fetch Worker');
+      Map<dynamic, dynamic>? resultMapFetchOneWorker =
+          await ServerHandler().fetchOneWorker(currentShopId, worker.name);
+
+      /// Worker Hour
+      for (WorkerHour workerHour
+          in Provider.of<WorkerHourInfo>(context, listen: false)
+              .workersHourList
+              .where((element) =>
+                  element.nameOfTheWorker ==
+                  resultMapFetchOneWorker!['worker']['worker_name'])
+              .toList()) {
+        print(
+            'Adding worker hour: ${workerHour.day} and ${resultMapFetchOneWorker!['worker']['worker_id']}');
+        Map<dynamic, dynamic>? resultMapAddWorkerHour = await ServerHandler()
+            .addNewWorkerHour(
+                workerHour: workerHour,
+                worker_id: resultMapFetchOneWorker['worker']['worker_id']);
+      }
+    }
+
+    /// Shop Hour Adding
+    print('Adding shop hour');
+    for (ShopHours shopHour
+        in Provider.of<ShopHoursInfo>(context, listen: false).shopHoursList) {
+      Map<dynamic, dynamic>? resultMapAddShopHour = await ServerHandler()
+          .addNewShopHour(
+              shopHour: shopHour, shop_id: currentShopId.toString());
+    }
+
+    /// Service Adding
+    // for (Service service
+    //     in Provider.of<ServiceInfo>(context, listen: false).allService) {
+    //   Map<dynamic, dynamic>? resultMapAddService = await ServerHandler()
+    //       .addNewService(service: service, shop_id: currentShopId.toString());
+    // }
   }
 
   Future<void> _showMyDialog(Map<dynamic, dynamic> resultMap) async {

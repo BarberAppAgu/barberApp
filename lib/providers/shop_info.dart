@@ -12,6 +12,7 @@ class ShopInfo with ChangeNotifier {
     lng: 0,
     favNum: 0,
     imgUrl: 'imgUrl',
+    user_id: 0,
   );
   File? imageFile;
 
@@ -30,6 +31,11 @@ class ShopInfo with ChangeNotifier {
 
   void updateShopImage(File? newImageFile) {
     imageFile = newImageFile;
+    notifyListeners();
+  }
+
+  void updateShopUserId(int currentShopId) {
+    shop.user_id = currentShopId;
     notifyListeners();
   }
 }
