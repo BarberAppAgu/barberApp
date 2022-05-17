@@ -85,26 +85,6 @@ class ServerHandler {
     return null;
   }
 
-  Future<Map<dynamic, dynamic>?> loginUser(
-      String email, String password) async {
-    try {
-      http.Response response = await http.post(
-        Uri.parse('$_baseUrl/user/login.php'),
-        body: {
-          'email': email,
-          'password': password,
-        },
-      );
-
-      Map<dynamic, dynamic> result = jsonDecode(response.body);
-      print('result: $result');
-      return result;
-    } catch (e) {
-      print('Server Handler: Error : $e');
-    }
-    return null;
-  }
-
   Future<Map<dynamic, dynamic>?> fetchOneUser(String email) async {
     try {
       http.Response response = await http.post(
@@ -241,7 +221,7 @@ class ServerHandler {
           'shop_id': shop_id,
           'service_name': service.serviceName,
           'price': service.price,
-          'work_hour': service.hourOfProcess,
+          'hour_process': service.hourOfProcess,
         },
       );
 

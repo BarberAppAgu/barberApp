@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../constants.dart';
 import '../../widgets/customer/formatter/max_lines_formatter.dart';
+import 'cus_profile_view.dart';
 
 class CusEditProfileView extends StatefulWidget {
   const CusEditProfileView({Key? key}) : super(key: key);
@@ -34,7 +35,10 @@ class _CusEditProfileViewState extends State<CusEditProfileView> {
           width: double.infinity,
           height: height * 0.075,
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => CusProfileView()));
+            },
             child: Text(
               "Apply Changes",
               style: TextStyle(
@@ -55,6 +59,7 @@ class _CusEditProfileViewState extends State<CusEditProfileView> {
           ),
         ),
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           centerTitle: true,
           iconTheme: const IconThemeData(
             color: Colors.black,
@@ -73,6 +78,7 @@ class _CusEditProfileViewState extends State<CusEditProfileView> {
               ),
               preferredSize: const Size.fromHeight(4.0)),
         ),
+        resizeToAvoidBottomInset: false,
         body: SingleChildScrollView(
           child: Column(
             children: [

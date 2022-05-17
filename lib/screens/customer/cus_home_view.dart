@@ -1,4 +1,5 @@
 import 'package:barber_app/screens/customer/cus_profile_view.dart';
+import 'package:barber_app/screens/customer/cus_services_view.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -20,6 +21,7 @@ class _CusHomeViewState extends State<CusHomeView> {
     return Scaffold(
       backgroundColor: kBackgroundColor,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         actions: [
           IconButton(
             icon: const FaIcon(FontAwesomeIcons.solidCircleUser),
@@ -90,11 +92,47 @@ class _CusHomeViewState extends State<CusHomeView> {
                   ),
                   preferredSize: const Size.fromHeight(4.0)),
             ),
-            buildCategory("assets/image/coiffeurs.png", "Coiffeurs"),
-            buildCategory("assets/image/barbers.png", "Barbers"),
-            buildCategory(
-                "assets/image/beutycenter.png", "Beuty And Aesthetic Center"),
-            buildCategory("assets/image/massage.png", "Spa & Massage Saloons")
+            GestureDetector(onTap:(){
+              setState(() {
+
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const ServicesPage()),
+                  );
+
+              });
+            },child: buildCategory("assets/image/coiffeurs.png", "Coiffeurs")),
+      GestureDetector(onTap:(){
+        setState(() {
+
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const ServicesPage()),
+          );
+
+        });
+      },child: buildCategory("assets/image/barbers.png", "Barbers")),
+      GestureDetector(onTap:(){
+        setState(() {
+
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const ServicesPage()),
+          );
+
+        });
+      },child: buildCategory(
+                "assets/image/beutycenter.png", "Beuty And Aesthetic Center")),
+      GestureDetector(onTap:(){
+        setState(() {
+
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const ServicesPage()),
+          );
+
+        });
+      },child:  buildCategory("assets/image/massage.png", "Spa & Massage Saloons")),
           ],
         ),
       ),
