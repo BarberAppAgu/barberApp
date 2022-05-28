@@ -7,8 +7,12 @@ import '../../models/basicUser.dart';
 
 class PersonalInfoForms extends StatefulWidget {
   Function callback;
+  Function callback2;
 
-  PersonalInfoForms({required this.callback});
+  PersonalInfoForms({
+    required this.callback,
+    required this.callback2,
+  });
 
   @override
   State<PersonalInfoForms> createState() => _PersonalInfoFormsState();
@@ -26,7 +30,7 @@ class _PersonalInfoFormsState extends State<PersonalInfoForms> {
 
   @override
   void initState() {
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       setState(() {
         setPersonalInfo(context);
       });
@@ -162,10 +166,38 @@ class _PersonalInfoFormsState extends State<PersonalInfoForms> {
             children: [
               GestureDetector(
                 onTap: () {
-                  if (Provider.of<BasicUserInfo>(context, listen: false)
-                          .basicUser
-                          .type ==
-                      'Employer') {
+                  // if (Provider.of<BasicUserInfo>(context, listen: false)
+                  //         .basicUser
+                  //         .type ==
+                  //     'Employer') {
+                  //   Provider.of<BasicUserInfo>(context, listen: false)
+                  //       .updateGeneralUserInfo(
+                  //           nameCtr.text,
+                  //           surnameCtr.text,
+                  //           cityDropDownValue,
+                  //           genderDropDownValue,
+                  //           birthdayCtr.text,
+                  //           phoneNoCtr.text);
+                  //   if (nameCtr.text.isEmpty ||
+                  //       surnameCtr.text.isEmpty ||
+                  //       cityDropDownValue == 'Select City' ||
+                  //       genderDropDownValue == 'Select Gender' ||
+                  //       birthdayCtr.text.isEmpty ||
+                  //       phoneNoCtr.text.isEmpty) {
+                  //     _showMyDialog('Error', 'Please fill all fields.');
+                  //   } else {
+                  //     widget.callback(2);
+                  //   }
+                  // }
+
+                  if (nameCtr.text.isEmpty ||
+                      surnameCtr.text.isEmpty ||
+                      cityDropDownValue == 'Select City' ||
+                      genderDropDownValue == 'Select Gender' ||
+                      birthdayCtr.text.isEmpty ||
+                      phoneNoCtr.text.isEmpty) {
+                    _showMyDialog('Error', 'Please fill all fields.');
+                  } else {
                     Provider.of<BasicUserInfo>(context, listen: false)
                         .updateGeneralUserInfo(
                             nameCtr.text,
@@ -174,15 +206,14 @@ class _PersonalInfoFormsState extends State<PersonalInfoForms> {
                             genderDropDownValue,
                             birthdayCtr.text,
                             phoneNoCtr.text);
-                    if (nameCtr.text.isEmpty ||
-                        surnameCtr.text.isEmpty ||
-                        cityDropDownValue == 'Select City' ||
-                        genderDropDownValue == 'Select Gender' ||
-                        birthdayCtr.text.isEmpty ||
-                        phoneNoCtr.text.isEmpty) {
-                      _showMyDialog('Error', 'Please fill all fields.');
-                    } else {
+                    if (Provider.of<BasicUserInfo>(context, listen: false)
+                            .basicUser
+                            .type ==
+                        'Employer') {
                       widget.callback(2);
+                    } else {
+                      /// For Customer
+                      widget.callback2();
                     }
                   }
                 },

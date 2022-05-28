@@ -59,6 +59,13 @@ class _CusEditProfileViewState extends State<CusEditProfileView> {
           ),
         ),
         appBar: AppBar(
+          leading: IconButton(
+            onPressed: () => Navigator.pop(context),
+            icon: const Icon(
+              Icons.arrow_back_ios,
+              color: Colors.black,
+            ),
+          ),
           automaticallyImplyLeading: false,
           centerTitle: true,
           iconTheme: const IconThemeData(
@@ -102,7 +109,6 @@ class _CusEditProfileViewState extends State<CusEditProfileView> {
                 child: TextField(
                   maxLines: maxLines,
                   maxLength: maxLength,
-                  maxLengthEnforced: true,
                   keyboardType: TextInputType.multiline,
                   inputFormatters: [MaxLinesTextInputFormatter(maxLinesForced)],
                   decoration: InputDecoration(

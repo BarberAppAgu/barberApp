@@ -1,10 +1,15 @@
 import 'package:barber_app/constants.dart';
+import 'package:barber_app/models/basicUser.dart';
 import 'package:barber_app/screens/customer/cus_home_view.dart';
+import 'package:barber_app/screens/employer/emp_home_view.dart';
 import 'package:barber_app/screens/enter/sign_up_view.dart';
+import 'package:barber_app/services/auth_shared_pref.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/basicUserInfo.dart';
+import '../../services/server_handler.dart';
 
 enum SignCondition { signIn, signUp }
 
@@ -28,7 +33,6 @@ class _SignViewState extends State<SignView> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
     return Scaffold(
       body: Form(
         key: textFieldKey,
@@ -117,15 +121,33 @@ class _SignViewState extends State<SignView> {
                         : Container(),
                     const Spacer(),
                     GestureDetector(
-                      onTap: () {
+                      onTap: () async {
                         if (textFieldKey.currentState!.validate()) {
                           if (signCondition == SignCondition.signIn) {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const CusHomeView(),
-                              ),
-                            );
+                            Map<dynamic, dynamic>? resultMapLoginUser =
+                                await ServerHandler()
+                                    .loginUser(emailCtr.text, passwordCtr.text);
+
+                            if (resultMapLoginUser!['success'] == 0) {
+                              await _showMyDialog(
+                                  'Error', resultMapLoginUser['message']);
+                            } else {
+                              BasicUser currentUser = BasicUser.fromMapForLogin(
+                                  resultMapLoginUser['user']);
+                              await AuthSharedPref()
+                                  .saveAuthData(currentUser.email);
+                              Provider.of<BasicUserInfo>(context, listen: false)
+                                  .updateAllUserInfo(currentUser);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      currentUser.shopId == null
+                                          ? CusHomeView()
+                                          : EmpHomeView(),
+                                ),
+                              );
+                            }
                           } else {
                             print('Hello1');
                             Provider.of<BasicUserInfo>(context, listen: false)
@@ -258,6 +280,10 @@ class _SignViewState extends State<SignView> {
               signCondition == SignCondition.signUp &&
               passwordCtr.text != passwordAgainCtr.text) {
             return 'Please enter same password';
+          } else if (hintText == 'Email') {
+            if (!EmailValidator.validate(val)) {
+              return 'Please enter valid email format';
+            }
           }
         },
         controller: ctr,
@@ -283,6 +309,36 @@ class _SignViewState extends State<SignView> {
           ),
         ),
       ),
+    );
+  }
+
+  Future<void> _showMyDialog(String title, String detail) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(detail),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              style: TextButton.styleFrom(
+                primary: kTurquoise,
+              ),
+              child: const Text('Approve'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

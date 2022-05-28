@@ -4,12 +4,15 @@ import 'package:barber_app/providers/shop_info.dart';
 import 'package:barber_app/providers/worker_hour_info.dart';
 import 'package:barber_app/providers/worker_info.dart';
 import 'package:barber_app/screens/enter/sign_view.dart';
+import 'package:barber_app/screens/on_board.dart';
+import 'package:barber_app/services/auth_shared_pref.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 
 import 'providers/basicUserInfo.dart';
+
 //test push--
 void main() {
   runApp(
@@ -47,7 +50,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(),
-      home: SignView(),
+      home: OnBoard(),
     );
   }
 }

@@ -1,5 +1,6 @@
 class BasicUser {
-  String type;
+  int? userId;
+  String? type;
   String email;
   String password;
   String name;
@@ -8,9 +9,11 @@ class BasicUser {
   String gender;
   String birthday;
   String phoneNumber;
+  int? shopId;
 
   BasicUser({
-    required this.type,
+    this.userId,
+    this.type,
     required this.email,
     required this.password,
     required this.name,
@@ -19,6 +22,7 @@ class BasicUser {
     required this.gender,
     required this.birthday,
     required this.phoneNumber,
+    this.shopId,
   });
 
   Map<String, dynamic> toMap() => {
@@ -33,9 +37,8 @@ class BasicUser {
         'phoneNumber': phoneNumber,
       };
 
-  factory BasicUser.fromMap(Map map) {
+  factory BasicUser.fromMapForRegister(Map map) {
     return BasicUser(
-      type: map['type'],
       email: map['email'],
       password: map['password'],
       name: map['name'],
@@ -43,7 +46,24 @@ class BasicUser {
       city: map['city'],
       gender: map['gender'],
       birthday: map['birthday'],
-      phoneNumber: map['phoneNumber'],
+      phoneNumber: map['phone_no'],
+    );
+  }
+
+  factory BasicUser.fromMapForLogin(Map map) {
+    print('map in the basicUser model class: $map');
+    print('type of shop_id: ${map['shop_id'].runtimeType}');
+    return BasicUser(
+      userId: int.parse(map['user_id']),
+      email: map['email'],
+      password: '',
+      name: map['name'],
+      surname: map['surname'],
+      city: map['city'],
+      gender: map['gender'],
+      birthday: map['birthday'],
+      phoneNumber: map['phone_no'],
+      shopId: map['shop_id'] == null ? null : int.parse(map['shop_id']),
     );
   }
 }

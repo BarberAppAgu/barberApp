@@ -58,7 +58,7 @@ class _ShopInformationFormsState extends State<ShopInformationForms> {
 
   @override
   void initState() {
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       setState(() {
         setShopHours(context);
         setShopInfo(context);
@@ -105,9 +105,10 @@ class _ShopInformationFormsState extends State<ShopInformationForms> {
               },
               items: [
                 'Type Of Shop',
-                'Barbershop',
-                'Woman Hairdresser',
-                'Massage Saloon'
+                'Coiffeurs',
+                'Barbers',
+                'Beuty And Aesthetic Center',
+                'Spa & Massage Saloons',
               ].map<DropdownMenuItem<String>>(
                 (String value) {
                   return DropdownMenuItem<String>(

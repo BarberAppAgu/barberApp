@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import 'cus_services_view.dart';
@@ -13,19 +12,18 @@ class CreateAppointmet extends StatefulWidget {
 class _CreateAppointmetState extends State<CreateAppointmet> {
   bool agree = false;
 
-
   void _doSomething() {
-
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const ServicesPage()),
-      );
-
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(builder: (context) => ServicesPage()),
+    // );
+    print('Hello_doSomething');
   }
+
   String BarberName = "Raif Akkaş Hair Design Studio";
   String ServiceName = "Hair Cutting ";
   String date = "13-05-2022";
-  String hour="11:30";
+  String hour = "11:30";
 
   @override
   Widget build(BuildContext context) {
@@ -40,55 +38,50 @@ class _CreateAppointmetState extends State<CreateAppointmet> {
       body: Column(children: [
         buildColumn(size, BarberName),
         buildColumn(size, ServiceName),
-        DateColumn(size, date,"Date"),
-        DateColumn(size, hour,"Hour"),
+        DateColumn(size, date, "Date"),
+        DateColumn(size, hour, "Hour"),
         CheckboxRow(),
-
         CreateButton()
-
-
       ]),
     );
   }
 
   Expanded CreateButton() {
     return Expanded(
-
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Align(
-            alignment: Alignment.bottomCenter,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(primary: Color(0xff83D1C1),),
-
-                onPressed: agree ? _doSomething : null,
-                child: const Text('Create the Appointment')),
-          ),
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Align(
+          alignment: Alignment.bottomCenter,
+          child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Color(0xff83D1C1),
+              ),
+              onPressed: agree ? _doSomething : null,
+              child: const Text('Create the Appointment')),
         ),
-      );
+      ),
+    );
   }
 
   Row CheckboxRow() {
     return Row(
-
-        children: [
-          Material(
-
-            child: Checkbox(
-              value: agree,
-              onChanged: (value) {
-                setState(() {
-                  agree = value ?? false;
-                });
-              },
-            ),
+      children: [
+        Material(
+          child: Checkbox(
+            value: agree,
+            onChanged: (value) {
+              setState(() {
+                agree = value ?? false;
+              });
+            },
           ),
-          const Text(
-            'I have read and accept terms and conditions',
-            overflow: TextOverflow.ellipsis,
-          )
-        ],
-      );
+        ),
+        const Text(
+          'I have read and accept terms and conditions',
+          overflow: TextOverflow.ellipsis,
+        )
+      ],
+    );
   }
 
   Column buildColumn(Size size, String text) {
@@ -122,9 +115,11 @@ class _CreateAppointmetState extends State<CreateAppointmet> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("$type:",style: TextStyle(fontWeight: FontWeight.bold),),
+                  Text(
+                    "$type:",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
                   Text(text),
-
                 ],
               ),
             )),
@@ -140,5 +135,4 @@ class _CreateAppointmetState extends State<CreateAppointmet> {
       ],
     );
   }
-
 }

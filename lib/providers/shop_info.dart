@@ -10,7 +10,6 @@ class ShopInfo with ChangeNotifier {
     address: '',
     lat: 0,
     lng: 0,
-    favNum: 0,
     imgUrl: 'imgUrl',
     user_id: 0,
   );

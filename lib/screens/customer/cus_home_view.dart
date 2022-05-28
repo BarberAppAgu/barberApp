@@ -92,47 +92,60 @@ class _CusHomeViewState extends State<CusHomeView> {
                   ),
                   preferredSize: const Size.fromHeight(4.0)),
             ),
-            GestureDetector(onTap:(){
-              setState(() {
-
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const ServicesPage()),
-                  );
-
-              });
-            },child: buildCategory("assets/image/coiffeurs.png", "Coiffeurs")),
-      GestureDetector(onTap:(){
-        setState(() {
-
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const ServicesPage()),
-          );
-
-        });
-      },child: buildCategory("assets/image/barbers.png", "Barbers")),
-      GestureDetector(onTap:(){
-        setState(() {
-
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const ServicesPage()),
-          );
-
-        });
-      },child: buildCategory(
-                "assets/image/beutycenter.png", "Beuty And Aesthetic Center")),
-      GestureDetector(onTap:(){
-        setState(() {
-
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const ServicesPage()),
-          );
-
-        });
-      },child:  buildCategory("assets/image/massage.png", "Spa & Massage Saloons")),
+            GestureDetector(
+                onTap: () {
+                  setState(() {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ServicesPage(
+                                typeOfService: 'Coiffeurs',
+                              )),
+                    );
+                  });
+                },
+                child:
+                    buildCategory("assets/image/coiffeurs.png", "Coiffeurs")),
+            GestureDetector(
+                onTap: () {
+                  setState(() {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ServicesPage(
+                                typeOfService: 'Barbers',
+                              )),
+                    );
+                  });
+                },
+                child: buildCategory("assets/image/barbers.png", "Barbers")),
+            GestureDetector(
+                onTap: () {
+                  setState(() {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ServicesPage(
+                              typeOfService: 'Beuty And Aesthetic Center')),
+                    );
+                  });
+                },
+                child: buildCategory("assets/image/beutycenter.png",
+                    "Beuty And Aesthetic Center")),
+            GestureDetector(
+                onTap: () {
+                  setState(() {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ServicesPage(
+                                typeOfService: 'Spa & Massage Saloons',
+                              )),
+                    );
+                  });
+                },
+                child: buildCategory(
+                    "assets/image/massage.png", "Spa & Massage Saloons")),
           ],
         ),
       ),

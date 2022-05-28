@@ -35,4 +35,24 @@ class BasicUserInfo with ChangeNotifier {
     basicUser.phoneNumber = phoneNumber;
     notifyListeners();
   }
+
+  void updateAllUserInfo(BasicUser newBasicUser) {
+    basicUser = newBasicUser;
+    notifyListeners();
+  }
+
+  void clearUserInfo() {
+    basicUser = BasicUser(
+      type: 'User',
+      email: 'test@gmail.com',
+      password: '123456',
+      name: 'TestName',
+      surname: 'TestSurname',
+      city: 'Kayseri',
+      gender: 'Male',
+      birthday: '21.01.2001',
+      phoneNumber: '05432838743',
+    );
+    notifyListeners();
+  }
 }

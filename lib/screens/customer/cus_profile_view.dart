@@ -1,11 +1,16 @@
 import 'dart:ui';
+import 'package:barber_app/models/basicUser.dart';
+import 'package:barber_app/providers/basicUserInfo.dart';
 import 'package:barber_app/screens/customer/cus_edit_profile_view.dart';
 import 'package:barber_app/screens/customer/cus_favorite_view.dart';
 import 'package:barber_app/screens/customer/cus_home_view.dart';
 import 'package:barber_app/screens/customer/cus_reservation_view.dart';
+import 'package:barber_app/screens/on_board.dart';
+import 'package:barber_app/services/auth_shared_pref.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../constants.dart';
 
@@ -59,6 +64,22 @@ class _CusProfileViewState extends State<CusProfileView> {
                         builder: (context) => CusReservationView()));
               },
             ),
+            ListTile(
+              leading: const Icon(
+                Icons.logout,
+                color: Colors.red,
+              ),
+              title: const Text("Log Out"),
+              onTap: () async {
+                await AuthSharedPref().removeAuthData();
+                Provider.of<BasicUserInfo>(context, listen: false)
+                    .clearUserInfo();
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => OnBoard()),
+                    (route) => false);
+              },
+            ),
           ],
         ),
       ),
@@ -89,10 +110,13 @@ class _CusProfileViewState extends State<CusProfileView> {
         ),
       ),
       appBar: AppBar(
-        leading: IconButton(onPressed: (){
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => CusHomeView()));
-        }, icon:Icon(Icons.arrow_back_ios),),
+        leading: IconButton(
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => CusHomeView()));
+          },
+          icon: Icon(Icons.arrow_back_ios),
+        ),
         centerTitle: true,
         iconTheme: const IconThemeData(
           color: Colors.black,
@@ -123,7 +147,7 @@ class _CusProfileViewState extends State<CusProfileView> {
           Padding(
             padding: EdgeInsets.only(bottom: height * 0.03),
             child: Text(
-              "John Doe",
+              "${Provider.of<BasicUserInfo>(context, listen: false).basicUser.name} ${Provider.of<BasicUserInfo>(context, listen: false).basicUser.surname}",
               style: TextStyle(
                   fontSize: height * 0.025,
                   fontWeight: FontWeight.bold,
@@ -173,7 +197,9 @@ class _CusProfileViewState extends State<CusProfileView> {
               child: Align(
                 alignment: Alignment.center,
                 child: Text(
-                  "+90 555 555 55 55",
+                  Provider.of<BasicUserInfo>(context, listen: false)
+                      .basicUser
+                      .phoneNumber,
                   style: TextStyle(
                     fontSize: height * 0.020,
                     fontWeight: FontWeight.bold,
@@ -185,7 +211,7 @@ class _CusProfileViewState extends State<CusProfileView> {
           Container(
             margin: EdgeInsets.only(right: width * 0.6),
             child: Text(
-              "Address Information",
+              "City Information",
               style: TextStyle(
                 fontSize: height * 0.020,
                 fontWeight: FontWeight.bold,
@@ -213,7 +239,9 @@ class _CusProfileViewState extends State<CusProfileView> {
                 alignment: Alignment.center,
                 heightFactor: height * 0.1,
                 child: Text(
-                  "Steamboat Springs, Colorado(CO), 80487",
+                  Provider.of<BasicUserInfo>(context, listen: false)
+                      .basicUser
+                      .city,
                   style: TextStyle(
                     fontSize: height * 0.018,
                     fontWeight: FontWeight.bold,
