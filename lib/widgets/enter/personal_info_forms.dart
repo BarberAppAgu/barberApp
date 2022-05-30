@@ -30,7 +30,7 @@ class _PersonalInfoFormsState extends State<PersonalInfoForms> {
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       setState(() {
         setPersonalInfo(context);
       });
