@@ -58,7 +58,7 @@ class _ShopInformationFormsState extends State<ShopInformationForms> {
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       setState(() {
         setShopHours(context);
         setShopInfo(context);

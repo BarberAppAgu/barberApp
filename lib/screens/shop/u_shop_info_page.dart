@@ -183,10 +183,16 @@ class _uShopInfo2State extends State<uShopInfo2> {
           ),
           title: Column(
             children: [
-              Stack(alignment: Alignment.bottomRight, children: <Widget>[
+              Stack(alignment: Alignment.bottomCenter,
+
+                  children: <Widget>[
                 Image(
+
                   image: new NetworkImage(
-                      "https://images.squarespace-cdn.com/content/v1/58ec34be03596e9140b6a633/1509598561215-N03XJ9BSZPMLHEQ9AWNN/IMG_1305.JPG?format=1000w"),
+
+                      widget.currentShop.imgUrl,
+                      scale:MediaQuery.of(context).size.height*0.001
+                      ),
                 ),
                 Padding(
                     padding: EdgeInsets.all(8.0),
