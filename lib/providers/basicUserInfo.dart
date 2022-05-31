@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 class BasicUserInfo with ChangeNotifier {
   BasicUser basicUser = BasicUser(
     type: 'User',
-    email: 'test@gmail.com',
-    password: '123456',
-    name: 'TestName',
-    surname: 'TestSurname',
-    city: 'Kayseri',
-    gender: 'Male',
-    birthday: '21.01.2001',
-    phoneNumber: '05432838743',
+    email: '',
+    password: '',
+    name: '',
+    surname: '',
+    city: 'Select City',
+    gender: 'Select Gender',
+    birthday: '',
+    phoneNumber: '',
   );
 
   void updateType(String newType) {
@@ -44,14 +44,14 @@ class BasicUserInfo with ChangeNotifier {
   void clearUserInfo() {
     basicUser = BasicUser(
       type: 'User',
-      email: 'test@gmail.com',
-      password: '123456',
-      name: 'TestName',
-      surname: 'TestSurname',
-      city: 'Kayseri',
-      gender: 'Male',
-      birthday: '21.01.2001',
-      phoneNumber: '05432838743',
+      email: '',
+      password: '',
+      name: '',
+      surname: '',
+      city: 'Select City',
+      gender: 'Select Gender',
+      birthday: '',
+      phoneNumber: '',
     );
     notifyListeners();
   }
