@@ -155,7 +155,7 @@ class _EmpHomeViewState extends State<EmpHomeView> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          Icon(Icons.event, color: Colors.white,size: width*0.12,),
+                          Icon(Icons.card_giftcard, color: Colors.white,size: width*0.12,),
                           Text('CAMPAIGNs', style: TextStyle(color: Colors.white, fontSize: 15),),
                         ],
                       ),
