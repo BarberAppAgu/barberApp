@@ -1,4 +1,5 @@
 import 'package:barber_app/providers/basicUserInfo.dart';
+import 'package:barber_app/screens/employer/campaigns_view.dart';
 import 'package:barber_app/screens/on_board.dart';
 import 'package:barber_app/services/auth_shared_pref.dart';
 import 'package:flutter/material.dart';
@@ -161,7 +162,12 @@ class _EmpHomeViewState extends State<EmpHomeView> {
                     SizedBox(height: height* 0.02),
 
                     GestureDetector(
-                      onTap: (){},
+                      onTap: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const ServicesPage()),
+                        );
+                      },
                       child: Container(
                         width: width*0.35,
                         height: height*0.30,
