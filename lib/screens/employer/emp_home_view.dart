@@ -1,4 +1,5 @@
 import 'package:barber_app/providers/basicUserInfo.dart';
+import 'package:barber_app/screens/employer/bookings_view.dart';
 import 'package:barber_app/screens/employer/campaigns_view.dart';
 import 'package:barber_app/screens/on_board.dart';
 import 'package:barber_app/services/auth_shared_pref.dart';
@@ -79,7 +80,11 @@ class _EmpHomeViewState extends State<EmpHomeView> {
                   children: [
 
                     GestureDetector(
-                      onTap: (){},
+                      onTap: (){
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const BookingTrack()));
+                      },
                       child: Container(
                         decoration: BoxDecoration(
                           border: Border.all(color: Colors.black, width: 2),
@@ -92,7 +97,7 @@ class _EmpHomeViewState extends State<EmpHomeView> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             Icon(Icons.event, color: Colors.white,size: width*0.12,),
-                            Text('BOOKING', style: TextStyle(color: Colors.white, fontSize: 15),),
+                            Text('BOOKINGs', style: TextStyle(color: Colors.white, fontSize: 15),),
                           ],
                         ),
 
