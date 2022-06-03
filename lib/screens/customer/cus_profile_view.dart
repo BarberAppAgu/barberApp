@@ -112,8 +112,9 @@ class _CusProfileViewState extends State<CusProfileView> {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => CusHomeView()));
+            Navigator.of(context).pop();
+            // Navigator.push(context,
+            //     MaterialPageRoute(builder: (context) => CusHomeView()));
           },
           icon: Icon(Icons.arrow_back_ios),
         ),

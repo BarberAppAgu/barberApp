@@ -1,3 +1,4 @@
+import 'package:barber_app/providers/data_on_order_page.dart';
 import 'package:barber_app/providers/service_info.dart';
 import 'package:barber_app/providers/shop_hours_info.dart';
 import 'package:barber_app/providers/shop_info.dart';
@@ -20,6 +21,9 @@ void main() {
       providers: [
         ChangeNotifierProvider<ShopInfo>(
           create: (_) => ShopInfo(),
+        ),
+        ChangeNotifierProvider<DataOnOrderPage>(
+          create: (_) => DataOnOrderPage(),
         ),
         ChangeNotifierProvider<BasicUserInfo>(
           create: (_) => BasicUserInfo(),

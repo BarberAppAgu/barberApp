@@ -190,7 +190,8 @@ class _uShopInfo2State extends State<uShopInfo2> {
 
                   image: new NetworkImage(
 
-                      widget.currentShop.imgUrl,
+                      //widget.currentShop.imgUrl,
+                    "https://www.blendbarbershop.com/wp-content/uploads/2021/10/photo-1585747860715-2ba37e788b70.jpg",
                       scale:MediaQuery.of(context).size.height*0.001
                       ),
                 ),
@@ -265,7 +266,7 @@ class _uShopInfo2State extends State<uShopInfo2> {
                     style: TextStyle(
                         color: Colors.black,
                         fontSize: MediaQuery.of(context).size.height * 0.03),
-                  ))
+                  )),
             ],
           ),
         ),
