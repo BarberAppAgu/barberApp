@@ -183,16 +183,10 @@ class _uShopInfo2State extends State<uShopInfo2> {
           ),
           title: Column(
             children: [
-              Stack(alignment: Alignment.bottomCenter,
-
-                  children: <Widget>[
+              Stack(alignment: Alignment.bottomCenter, children: <Widget>[
                 Image(
-
-                  image: new NetworkImage(
-
-                      widget.currentShop.imgUrl,
-                      scale:MediaQuery.of(context).size.height*0.001
-                      ),
+                  image: new NetworkImage(widget.currentShop.imgUrl,
+                      scale: MediaQuery.of(context).size.height * 0.001),
                 ),
                 Padding(
                     padding: EdgeInsets.all(8.0),
