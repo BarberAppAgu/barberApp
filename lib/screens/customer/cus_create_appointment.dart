@@ -1,6 +1,4 @@
-import 'package:barber_app/providers/data_on_order_page.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'cus_services_view.dart';
 
@@ -37,18 +35,14 @@ class _CreateAppointmetState extends State<CreateAppointmet> {
         centerTitle: true,
         shape: Border(bottom: BorderSide(color: Color(0xff83D1C1), width: 2)),
       ),
-      body: Consumer<DataOnOrderPage>(
-        builder: (context, data, child)=> Column(
-            children: [
-              buildColumn(size, data.shop!.name),
-              buildColumn(size, ServiceName),
-              DateColumn(size, date, "Date"),
-              DateColumn(size, hour, "Hour"),
-              CheckboxRow(),
-              CreateButton()
-          ]
-        ),
-      ),
+      body: Column(children: [
+        buildColumn(size, BarberName),
+        buildColumn(size, ServiceName),
+        DateColumn(size, date, "Date"),
+        DateColumn(size, hour, "Hour"),
+        CheckboxRow(),
+        CreateButton()
+      ]),
     );
   }
 

@@ -1,7 +1,6 @@
 import 'package:barber_app/models/basicUser.dart';
 import 'package:barber_app/models/shop.dart';
 import 'package:barber_app/providers/basicUserInfo.dart';
-import 'package:barber_app/providers/data_on_order_page.dart';
 import 'package:barber_app/services/server_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -291,203 +290,199 @@ class _ServicesPageState extends State<ServicesPage> {
         });
   }
 
-  Consumer entrepriseMethod(Size size, Shop shop) {
-    return Consumer<DataOnOrderPage>(
-      builder: (context, data, child)=> GestureDetector(
-        onTap: () {
-          data.setTheShopInfo(shop);
-          setState(() {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                //wwwwwwww
-                builder: (context) => uShopInfoPage(
-                  currentShop: shop,
+  GestureDetector entrepriseMethod(Size size, Shop shop) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => uShopInfoPage(
+                currentShop: shop,
+              ),
+            ),
+          ).then((value) => setState(() {}));
+        });
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          width: size.width * 4 / 5,
+          height: 100,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(10),
+                topRight: Radius.circular(10),
+                bottomLeft: Radius.circular(10),
+                bottomRight: Radius.circular(10)),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: const Offset(0, 3), // changes position of shadow
+              ),
+            ],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                width: size.width * 2 / 5,
+                child: Image.asset(
+                  'assets/image/barber2.jpg',
+                  fit: BoxFit.cover,
                 ),
               ),
-            ).then((value) => setState(() {}));
-          });
-        },
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Container(
-            width: size.width * 4 / 5,
-            height: 100,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  topRight: Radius.circular(10),
-                  bottomLeft: Radius.circular(10),
-                  bottomRight: Radius.circular(10)),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 5,
-                  blurRadius: 7,
-                  offset: const Offset(0, 3), // changes position of shadow
-                ),
-              ],
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  width: size.width * 2 / 5,
-                  child: Image.asset(
-                    'assets/image/barber2.jpg',
-                    fit: BoxFit.cover,
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        shop.name,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      // Text(
+                      //   "Min ${enterprise.fee} TL",
+                      //   style: TextStyle(fontWeight: FontWeight.bold),
+                      // ),
+                    ],
                   ),
                 ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+              ),
+              Expanded(
+                child: Padding(
+                    padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 4),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          shop.name,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        // Text(
-                        //   "Min ${enterprise.fee} TL",
-                        //   style: TextStyle(fontWeight: FontWeight.bold),
-                        // ),
-                      ],
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Padding(
-                      padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 4),
-                      child: Column(
-                        children: [
-                          Container(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.favorite,
-                                  color: Color(0xff83D1C3),
-                                  size: 15,
-                                ),
-                                FutureBuilder<int>(
-                                    future:
-                                        countShopFav(shop.shop_id!.toString()),
-                                    builder: (context, snapshot) {
-                                      if (snapshot.hasData) {
-                                        int currentNumFav = snapshot.data!;
-                                        return Text(
-                                          "$currentNumFav+",
-                                          style:
-                                              TextStyle(color: Color(0xff83D1C3)),
-                                        );
-                                      } else if (snapshot.hasError) {
-                                        return const Text(
-                                          "-1",
-                                          style:
-                                              TextStyle(color: Color(0xff83D1C3)),
-                                        );
-                                      }
-                                      return const Text(
-                                        "0",
+                        Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.favorite,
+                                color: Color(0xff83D1C3),
+                                size: 15,
+                              ),
+                              FutureBuilder<int>(
+                                  future:
+                                      countShopFav(shop.shop_id!.toString()),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasData) {
+                                      int currentNumFav = snapshot.data!;
+                                      return Text(
+                                        "$currentNumFav+",
                                         style:
                                             TextStyle(color: Color(0xff83D1C3)),
                                       );
-                                    }),
-                                FutureBuilder<int>(
-                                    future:
-                                        countComment(shop.shop_id!.toString()),
-                                    builder: (context, snapshot) {
-                                      if (snapshot.hasData) {
-                                        int currentNumCom = snapshot.data!;
-                                        return Text(
-                                          " $currentNumCom",
-                                          style: TextStyle(fontSize: 12),
-                                        );
-                                      } else if (snapshot.hasError) {
-                                        return const Text(
-                                          "-1",
-                                        );
-                                      }
+                                    } else if (snapshot.hasError) {
                                       return const Text(
-                                        "0",
+                                        "-1",
+                                        style:
+                                            TextStyle(color: Color(0xff83D1C3)),
                                       );
-                                    }),
-                              ],
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.2),
-                                  spreadRadius: 5,
-                                  blurRadius: 7,
-                                  offset:
-                                      Offset(0, 0), // changes position of shadow
-                                ),
-                              ],
-                            ),
+                                    }
+                                    return const Text(
+                                      "0",
+                                      style:
+                                          TextStyle(color: Color(0xff83D1C3)),
+                                    );
+                                  }),
+                              FutureBuilder<int>(
+                                  future:
+                                      countComment(shop.shop_id!.toString()),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasData) {
+                                      int currentNumCom = snapshot.data!;
+                                      return Text(
+                                        " $currentNumCom",
+                                        style: TextStyle(fontSize: 12),
+                                      );
+                                    } else if (snapshot.hasError) {
+                                      return const Text(
+                                        "-1",
+                                      );
+                                    }
+                                    return const Text(
+                                      "0",
+                                    );
+                                  }),
+                            ],
                           ),
-                          Expanded(
-                            child: Align(
-                              alignment: FractionalOffset.bottomRight,
-                              child: IconButton(
-                                icon: FutureBuilder<Map<dynamic, dynamic>?>(
-                                    future: ServerHandler().fetchOneShopFav(
-                                        cus_id: Provider.of<BasicUserInfo>(
-                                                context,
-                                                listen: false)
-                                            .basicUser
-                                            .userId
-                                            .toString(),
-                                        shop_id: shop.shop_id.toString()),
-                                    builder: (context, snapshot) {
-                                      if (snapshot.hasData) {
-                                        Map<dynamic, dynamic>?
-                                            fetchedDataOneShopFav = snapshot.data;
-                                        if (fetchedDataOneShopFav!['fav'] ==
-                                            null) {
-                                          return const Icon(
-                                            Icons.favorite_border,
-                                            size: 35,
-                                          );
-                                        } else {
-                                          return const Icon(
-                                            Icons.favorite,
-                                            size: 35,
-                                          );
-                                        }
-                                      }
-                                      return const Icon(
-                                        Icons.favorite_border,
-                                        size: 32,
-                                      );
-                                    }),
-                                color: Color(0xff83D1C3),
-                                onPressed: () async {
-                                  await ServerHandler().changeShopFav(
-                                      cus_id: Provider.of<BasicUserInfo>(context,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.2),
+                                spreadRadius: 5,
+                                blurRadius: 7,
+                                offset:
+                                    Offset(0, 0), // changes position of shadow
+                              ),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          child: Align(
+                            alignment: FractionalOffset.bottomRight,
+                            child: IconButton(
+                              icon: FutureBuilder<Map<dynamic, dynamic>?>(
+                                  future: ServerHandler().fetchOneShopFav(
+                                      cus_id: Provider.of<BasicUserInfo>(
+                                              context,
                                               listen: false)
                                           .basicUser
-                                          .userId!
+                                          .userId
                                           .toString(),
-                                      shop_id: shop.shop_id.toString());
-                                  setState(() {});
-                                },
-                              ),
+                                      shop_id: shop.shop_id.toString()),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasData) {
+                                      Map<dynamic, dynamic>?
+                                          fetchedDataOneShopFav = snapshot.data;
+                                      if (fetchedDataOneShopFav!['fav'] ==
+                                          null) {
+                                        return const Icon(
+                                          Icons.favorite_border,
+                                          size: 35,
+                                        );
+                                      } else {
+                                        return const Icon(
+                                          Icons.favorite,
+                                          size: 35,
+                                        );
+                                      }
+                                    }
+                                    return const Icon(
+                                      Icons.favorite_border,
+                                      size: 32,
+                                    );
+                                  }),
+                              color: Color(0xff83D1C3),
+                              onPressed: () async {
+                                await ServerHandler().changeShopFav(
+                                    cus_id: Provider.of<BasicUserInfo>(context,
+                                            listen: false)
+                                        .basicUser
+                                        .userId!
+                                        .toString(),
+                                    shop_id: shop.shop_id.toString());
+                                setState(() {});
+                              },
                             ),
                           ),
-                        ],
-                      )),
-                ),
-              ],
-            ),
+                        ),
+                      ],
+                    )),
+              ),
+            ],
           ),
         ),
       ),

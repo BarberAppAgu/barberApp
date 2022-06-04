@@ -26,7 +26,7 @@ class _WorkerInfoFormsState extends State<WorkerInfoForms> {
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       setState(() {
         setWorkerHourList(context);
         setWorkerList(context);

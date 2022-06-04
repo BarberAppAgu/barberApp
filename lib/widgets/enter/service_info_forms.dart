@@ -26,7 +26,7 @@ class _ServiceInfoFormsState extends State<ServiceInfoForms> {
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       setState(() {
         setOldServices(context);
       });

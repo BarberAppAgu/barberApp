@@ -1,3 +1,5 @@
+import 'package:barber_app/providers/appointment_info.dart';
+import 'package:barber_app/providers/order_info.dart';
 import 'package:barber_app/providers/service_info.dart';
 import 'package:barber_app/providers/shop_hours_info.dart';
 import 'package:barber_app/providers/shop_info.dart';
@@ -35,6 +37,12 @@ void main() {
         ),
         ChangeNotifierProvider<WorkerHourInfo>(
           create: (_) => WorkerHourInfo(),
+        ),
+        ChangeNotifierProvider<OrderInfo>(
+          create: (_) => OrderInfo(),
+        ),
+        ChangeNotifierProvider<AppointmentInfo>(
+          create: (_) => AppointmentInfo(),
         ),
       ],
       builder: (context, __) => const MyApp(),

@@ -162,6 +162,30 @@ class ServerHandler {
     }
     return null;
   }
+//yenii
+  Future<Map<dynamic, dynamic>?> updateUserInfo(
+      int user_id,String name,String surname,String password,String phone_no) async {
+    try {
+      http.Response response = await http.post(
+        Uri.parse('$_baseUrl/user/update_user_info.php'),
+        body: {
+          'user_id': user_id.toString(),
+          'name': name,
+          'surname': surname,
+          'password': password,
+          'phone_no': phone_no,
+
+        },
+      );
+
+      Map<dynamic, dynamic> result = jsonDecode(response.body);
+      print('result: $result');
+      return result;
+    } catch (e) {
+      print('Server Handler: Error : $e');
+    }
+    return null;
+  }
 
   /// WORKER TABLE
   Future<Map<dynamic, dynamic>?> addNewWorker(
@@ -184,11 +208,6 @@ class ServerHandler {
     }
     return null;
   }
-
-
-
-
-  
 
   Future<Map<dynamic, dynamic>?> fetchOneWorker(
       int shop_id, String worker_name) async {

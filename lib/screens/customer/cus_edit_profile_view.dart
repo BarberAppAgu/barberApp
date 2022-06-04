@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../constants.dart';
+import '../../providers/basicUserInfo.dart';
+import '../../services/server_handler.dart';
 import '../../widgets/customer/formatter/max_lines_formatter.dart';
 import 'cus_profile_view.dart';
 
@@ -35,9 +38,25 @@ class _CusEditProfileViewState extends State<CusEditProfileView> {
           width: double.infinity,
           height: height * 0.075,
           child: ElevatedButton(
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => CusProfileView()));
+            onPressed: ()  async {
+
+              Map<dynamic, dynamic>? resultMapOneShop =
+                  await ServerHandler().updateUserInfo(Provider.of<BasicUserInfo>(context, listen: false).basicUser.userId!,
+
+
+                      nameController.text,surnameController.text,passwordController.text,phoneNumberController.text);
+print(nameController.text+" "+passwordController.text);
+
+              if(nameController.text!="" ||phoneNumberController.text!=""){
+                Provider.of<BasicUserInfo>(context, listen: false).basicUser.name=nameController.text;
+                Provider.of<BasicUserInfo>(context, listen: false).basicUser.phoneNumber=phoneNumberController.text;
+              }
+               Navigator.of(context).pop();
+              //Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context)=> CusProfileView.withParam(nameController.text,phoneNumberController.text)), (route) => false);
+
+               // Navigator.push(context,
+               //     MaterialPageRoute(builder: (context) => CusProfileView.withParam(nameController.text,phoneNumberController.text)));
+
             },
             child: Text(
               "Apply Changes",
@@ -104,28 +123,28 @@ class _CusEditProfileViewState extends State<CusEditProfileView> {
               buildTextField("Surname", false, surnameController),
               buildTextField("Password", true, passwordController),
               buildTextField("Phone Number", false, phoneNumberController),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: TextField(
-                  maxLines: maxLines,
-                  maxLength: maxLength,
-                  keyboardType: TextInputType.multiline,
-                  inputFormatters: [MaxLinesTextInputFormatter(maxLinesForced)],
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    focusedBorder: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      borderSide: BorderSide(width: 1, color: kButtonColor),
-                    ),
-                    contentPadding: const EdgeInsets.only(bottom: 30, left: 20),
-                    labelText: "Address",
-                    labelStyle: const TextStyle(
-                        color: Colors.black, fontWeight: FontWeight.bold),
-                    floatingLabelBehavior: FloatingLabelBehavior.always
-                  ),
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.all(20.0),
+              //   child: TextField(
+              //     maxLines: maxLines,
+              //     maxLength: maxLength,
+              //     keyboardType: TextInputType.multiline,
+              //     inputFormatters: [MaxLinesTextInputFormatter(maxLinesForced)],
+              //     decoration: InputDecoration(
+              //       border: OutlineInputBorder(
+              //           borderRadius: BorderRadius.circular(10)),
+              //       focusedBorder: const OutlineInputBorder(
+              //         borderRadius: BorderRadius.all(Radius.circular(10)),
+              //         borderSide: BorderSide(width: 1, color: kButtonColor),
+              //       ),
+              //       contentPadding: const EdgeInsets.only(bottom: 30, left: 20),
+              //       labelText: "Address",
+              //       labelStyle: const TextStyle(
+              //           color: Colors.black, fontWeight: FontWeight.bold),
+              //       floatingLabelBehavior: FloatingLabelBehavior.always,
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),
@@ -138,6 +157,7 @@ class _CusEditProfileViewState extends State<CusEditProfileView> {
     return Padding(
       padding: const EdgeInsets.all(20),
       child: TextField(
+        controller: controller,
         obscureText: isPasswordTextField ? isPasswordObsecure : false,
         decoration: InputDecoration(
           focusedBorder: const OutlineInputBorder(

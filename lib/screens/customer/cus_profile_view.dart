@@ -15,7 +15,13 @@ import 'package:provider/provider.dart';
 import '../../constants.dart';
 
 class CusProfileView extends StatefulWidget {
-  const CusProfileView({Key? key}) : super(key: key);
+// const CusProfileView({Key? key}) : super(key: key);
+  String? name;
+  String? phone="";
+  CusProfileView.withParam(this.name,this.phone);
+  CusProfileView();
+
+
 
   @override
   State<CusProfileView> createState() => _CusProfileViewState();
@@ -89,6 +95,7 @@ class _CusProfileViewState extends State<CusProfileView> {
         height: height * 0.075,
         child: ElevatedButton(
           onPressed: () {
+
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => CusEditProfileView()));
           },
