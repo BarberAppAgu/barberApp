@@ -53,7 +53,7 @@ class _EmpHomeViewState extends State<EmpHomeView> {
                       height: height*0.33,
                       child: Image.asset('assets/logo/logo2.png'),
                     ),
-                    Text("Welcome, Hamza", style: const TextStyle(color: Colors.white, fontSize: 20),),
+                    Text("Welcome, ${Provider.of<BasicUserInfo>(context,listen: false).basicUser.name}", style: const TextStyle(color: Colors.white, fontSize: 20),),
 
                   ],
                 ),
@@ -61,6 +61,8 @@ class _EmpHomeViewState extends State<EmpHomeView> {
                   await AuthSharedPref().removeAuthData();
                   Provider.of<BasicUserInfo>(context, listen: false)
                       .clearUserInfo();
+
+
                   Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(builder: (context) => OnBoard()),

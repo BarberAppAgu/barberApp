@@ -122,7 +122,7 @@ class _CusEditProfileViewState extends State<CusEditProfileView> {
                     labelText: "Address",
                     labelStyle: const TextStyle(
                         color: Colors.black, fontWeight: FontWeight.bold),
-                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                    floatingLabelBehavior: FloatingLabelBehavior.always
                   ),
                 ),
               ),
