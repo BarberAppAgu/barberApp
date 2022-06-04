@@ -1,3 +1,5 @@
+import 'package:barber_app/screens/customer/cus_favorite_view.dart';
+import 'package:barber_app/screens/customer/cus_home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -45,17 +47,24 @@ class _CusEditProfileViewState extends State<CusEditProfileView> {
 
 
                       nameController.text,surnameController.text,passwordController.text,phoneNumberController.text);
-print(nameController.text+" "+passwordController.text);
+                      print(nameController.text+" "+passwordController.text);
 
-              if(nameController.text!="" ||phoneNumberController.text!=""){
-                Provider.of<BasicUserInfo>(context, listen: false).basicUser.name=nameController.text;
-                Provider.of<BasicUserInfo>(context, listen: false).basicUser.phoneNumber=phoneNumberController.text;
-              }
-               Navigator.of(context).pop();
-              //Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context)=> CusProfileView.withParam(nameController.text,phoneNumberController.text)), (route) => false);
+                      setState(() {
+                        if(nameController.text!="" ||phoneNumberController.text!=""){
+                          Provider.of<BasicUserInfo>(context, listen: false).basicUser.name=nameController.text;
+                          Provider.of<BasicUserInfo>(context, listen: false).basicUser.surname=surnameController.text;
 
-               // Navigator.push(context,
-               //     MaterialPageRoute(builder: (context) => CusProfileView.withParam(nameController.text,phoneNumberController.text)));
+                          Provider.of<BasicUserInfo>(context, listen: false).basicUser.phoneNumber=phoneNumberController.text;
+                        }
+                      });
+
+               //Navigator.of(context).pop();
+               Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>CusHomeView()), (route) => false);
+
+
+
+
+
 
             },
             child: Text(

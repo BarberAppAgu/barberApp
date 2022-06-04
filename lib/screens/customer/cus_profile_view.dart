@@ -155,7 +155,7 @@ class _CusProfileViewState extends State<CusProfileView> {
           Padding(
             padding: EdgeInsets.only(bottom: height * 0.03),
             child: Text(
-              "${Provider.of<BasicUserInfo>(context, listen: false).basicUser.name} ${Provider.of<BasicUserInfo>(context, listen: false).basicUser.surname}",
+              "${Provider.of<BasicUserInfo>(context, listen: true).basicUser.name} ${Provider.of<BasicUserInfo>(context, listen: true).basicUser.surname}",
               style: TextStyle(
                   fontSize: height * 0.025,
                   fontWeight: FontWeight.bold,
