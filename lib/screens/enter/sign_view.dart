@@ -124,10 +124,11 @@ class _SignViewState extends State<SignView> {
                       onTap: () async {
                         if (textFieldKey.currentState!.validate()) {
                           if (signCondition == SignCondition.signIn) {
+                            print('King');
                             Map<dynamic, dynamic>? resultMapLoginUser =
                                 await ServerHandler()
                                     .loginUser(emailCtr.text, passwordCtr.text);
-
+                            print('Yes, King');
                             if (resultMapLoginUser!['success'] == 0) {
                               await _showMyDialog(
                                   'Error', resultMapLoginUser['message']);

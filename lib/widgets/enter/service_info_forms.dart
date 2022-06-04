@@ -22,11 +22,11 @@ class _ServiceInfoFormsState extends State<ServiceInfoForms> {
   TextEditingController serviceNameCtr = TextEditingController();
   TextEditingController priceCtr = TextEditingController();
 
-  String hourOfProcessDropDownValue = 'Select Hour';
+  int hourOfProcessDropDownValue = 0;
 
   @override
   void initState() {
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       setState(() {
         setOldServices(context);
       });
@@ -96,7 +96,7 @@ class _ServiceInfoFormsState extends State<ServiceInfoForms> {
                           width: 8,
                         ),
                         Text(
-                          services[index].hourOfProcess,
+                          convertIntToString(services[index].hourOfProcess),
                           style: const TextStyle(
                             color: Colors.black,
                             fontSize: 16,
@@ -203,7 +203,7 @@ class _ServiceInfoFormsState extends State<ServiceInfoForms> {
                 ),
                 hourOfProcess: hourOfProcessDropDownValue,
               );
-              hourOfProcessDropDownValue = 'Select Hour';
+              hourOfProcessDropDownValue = 0;
               setState(() {
                 services.insert(services.length - 2, newService);
                 services.removeAt(services.length - 2);
@@ -262,7 +262,7 @@ class _ServiceInfoFormsState extends State<ServiceInfoForms> {
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Center(
-                            child: DropdownButton<String>(
+                            child: DropdownButton<int>(
                               isExpanded: true,
                               value: hourOfProcessDropDownValue,
                               icon: const Icon(
@@ -271,28 +271,28 @@ class _ServiceInfoFormsState extends State<ServiceInfoForms> {
                               elevation: 16,
                               underline: Container(),
                               borderRadius: BorderRadius.circular(16),
-                              onChanged: (String? newValue) {
+                              onChanged: (int? newValue) {
                                 setState(() {
                                   hourOfProcessDropDownValue = newValue!;
                                   print(newValue);
                                 });
                               },
                               items: [
-                                'Select Hour',
-                                '15 Min',
-                                '30 Min',
-                                '45 Min',
-                                '1 Hour',
-                                '1.5 Hour',
-                                '2 Hour',
-                              ].map<DropdownMenuItem<String>>(
-                                (String value) {
-                                  return DropdownMenuItem<String>(
+                                0,
+                                1,
+                                2,
+                                3,
+                                4,
+                                6,
+                                8,
+                              ].map<DropdownMenuItem<int>>(
+                                (int value) {
+                                  return DropdownMenuItem<int>(
                                     value: value,
                                     child: Text(
-                                      value,
+                                      convertIntToString(value),
                                       style: TextStyle(
-                                        color: value == 'Select Hour'
+                                        color: value == 0
                                             ? Colors.grey
                                             : Colors.black,
                                       ),
@@ -313,6 +313,24 @@ class _ServiceInfoFormsState extends State<ServiceInfoForms> {
         ),
       ],
     );
+  }
+
+  String convertIntToString(int numberOfIndex) {
+    if (numberOfIndex == 0) {
+      return 'Select Hour';
+    } else if (numberOfIndex == 1) {
+      return '15 Min.';
+    } else if (numberOfIndex == 2) {
+      return '30 Min.';
+    } else if (numberOfIndex == 3) {
+      return '45 Min.';
+    } else if (numberOfIndex == 4) {
+      return '1 Hour';
+    } else if (numberOfIndex == 6) {
+      return '1.5 Hour';
+    } else {
+      return '2 Hour';
+    }
   }
 
   Future<void> _showMyDialog(String title, String detail) async {

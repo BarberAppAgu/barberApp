@@ -22,11 +22,11 @@ class _WorkerInfoFormsState extends State<WorkerInfoForms> {
   TextEditingController workerNameCtr = TextEditingController();
 
   List<WorkerHour> workerHoursList = [];
-  List<String> times = ['08.00', '08.30', '09.00', '20.00', '23.00'];
+  List<int> times = List.generate(16, (index) => ((index + 1) * 4));
 
   @override
   void initState() {
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       setState(() {
         setWorkerHourList(context);
         setWorkerList(context);
@@ -97,9 +97,11 @@ class _WorkerInfoFormsState extends State<WorkerInfoForms> {
                         itemBuilder: (context, index2) {
                           return Text(currentWorkerHours[index2].day +
                               ' From ' +
-                              currentWorkerHours[index2].startTime +
+                              // consider-1
+                              '${((currentWorkerHours[index2].startTime / 4) + 7).round()}:00' +
                               ' To ' +
-                              currentWorkerHours[index2].finishTime);
+                              // consider-2
+                              '${((currentWorkerHours[index2].finishTime / 4) + 7).round()}:00');
                         }),
                   ],
                 ),
@@ -262,7 +264,7 @@ class _WorkerInfoFormsState extends State<WorkerInfoForms> {
         Text('From '),
         IgnorePointer(
           ignoring: workerHourData.isSelected! ? false : true,
-          child: DropdownButton<String>(
+          child: DropdownButton<int>(
             value: workerHourData.startTime,
             icon: const Icon(
               Icons.keyboard_arrow_down_outlined,
@@ -270,7 +272,7 @@ class _WorkerInfoFormsState extends State<WorkerInfoForms> {
             elevation: 16,
             underline: Container(),
             borderRadius: BorderRadius.circular(16),
-            onChanged: (String? newValue) {
+            onChanged: (int? newValue) {
               setState(() {
                 workerHourData.startTime = newValue!;
                 // for (int i = 0; i < newShopHoursList.length; i++) {
@@ -282,12 +284,12 @@ class _WorkerInfoFormsState extends State<WorkerInfoForms> {
                 print(newValue);
               });
             },
-            items: times.map<DropdownMenuItem<String>>(
-              (String value) {
-                return DropdownMenuItem<String>(
+            items: times.map<DropdownMenuItem<int>>(
+              (int value) {
+                return DropdownMenuItem<int>(
                   value: value,
                   child: Text(
-                    value,
+                    '${((value / 4) + 7).round()}:00',
                     style: TextStyle(
                       color: workerHourData.isSelected!
                           ? Colors.black
@@ -305,7 +307,7 @@ class _WorkerInfoFormsState extends State<WorkerInfoForms> {
         Text('To '),
         IgnorePointer(
           ignoring: workerHourData.isSelected! ? false : true,
-          child: DropdownButton<String>(
+          child: DropdownButton<int>(
             value: workerHourData.finishTime,
             icon: const Icon(
               Icons.keyboard_arrow_down_outlined,
@@ -313,7 +315,7 @@ class _WorkerInfoFormsState extends State<WorkerInfoForms> {
             elevation: 16,
             underline: Container(),
             borderRadius: BorderRadius.circular(16),
-            onChanged: (String? newValue) {
+            onChanged: (int? newValue) {
               setState(() {
                 workerHourData.finishTime = newValue!;
                 // for (int i = 0; i < newShopHoursList.length; i++) {
@@ -324,12 +326,12 @@ class _WorkerInfoFormsState extends State<WorkerInfoForms> {
                 print(newValue);
               });
             },
-            items: times.map<DropdownMenuItem<String>>(
-              (String value) {
-                return DropdownMenuItem<String>(
+            items: times.map<DropdownMenuItem<int>>(
+              (int value) {
+                return DropdownMenuItem<int>(
                   value: value,
                   child: Text(
-                    value,
+                    '${((value / 4) + 7).round()}:00',
                     style: TextStyle(
                       color: workerHourData.isSelected!
                           ? Colors.black
@@ -366,41 +368,13 @@ class _WorkerInfoFormsState extends State<WorkerInfoForms> {
 
   void setWorkerHourList(BuildContext context) {
     workerHoursList = [
-      WorkerHour(
-          day: 'Mon.',
-          startTime: '08.00',
-          finishTime: '23.00',
-          isSelected: false),
-      WorkerHour(
-          day: 'Tue.',
-          startTime: '08.00',
-          finishTime: '23.00',
-          isSelected: false),
-      WorkerHour(
-          day: 'Wed.',
-          startTime: '08.00',
-          finishTime: '23.00',
-          isSelected: false),
-      WorkerHour(
-          day: 'Thu.',
-          startTime: '08.00',
-          finishTime: '23.00',
-          isSelected: false),
-      WorkerHour(
-          day: 'Fri.',
-          startTime: '08.00',
-          finishTime: '23.00',
-          isSelected: false),
-      WorkerHour(
-          day: 'Sat.',
-          startTime: '08.00',
-          finishTime: '23.00',
-          isSelected: false),
-      WorkerHour(
-          day: 'Sun.',
-          startTime: '08.00',
-          finishTime: '23.00',
-          isSelected: false),
+      WorkerHour(day: 'Mon.', startTime: 4, finishTime: 64, isSelected: false),
+      WorkerHour(day: 'Tue.', startTime: 4, finishTime: 64, isSelected: false),
+      WorkerHour(day: 'Wed.', startTime: 4, finishTime: 64, isSelected: false),
+      WorkerHour(day: 'Thu.', startTime: 4, finishTime: 64, isSelected: false),
+      WorkerHour(day: 'Fri.', startTime: 4, finishTime: 64, isSelected: false),
+      WorkerHour(day: 'Sat.', startTime: 4, finishTime: 64, isSelected: false),
+      WorkerHour(day: 'Sun.', startTime: 4, finishTime: 64, isSelected: false),
     ];
   }
 

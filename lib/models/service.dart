@@ -3,7 +3,7 @@ class Service {
   int? shopId;
   String serviceName;
   double price;
-  String hourOfProcess;
+  int hourOfProcess;
 
   Service({
     this.serviceId,
@@ -17,7 +17,7 @@ class Service {
     return Service(
       serviceName: map['service_name'],
       price: double.parse(map['price']),
-      hourOfProcess: map['work_hour'],
+      hourOfProcess: int.parse(map['work_hour']),
       shopId: int.parse(map['shop_id']),
       serviceId: int.parse(map['service_id']),
     );

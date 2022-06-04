@@ -205,6 +205,24 @@ class ServerHandler {
     return null;
   }
 
+  Future<Map<dynamic, dynamic>?> fetchWorkers({required String shop_id}) async {
+    try {
+      http.Response response = await http.post(
+        Uri.parse('$_baseUrl/worker/fetch_workers.php'),
+        body: {
+          'shop_id': shop_id,
+        },
+      );
+
+      Map<dynamic, dynamic> result = jsonDecode(response.body);
+      print('result: $result');
+      return result;
+    } catch (e) {
+      print('Server Handler: Error : $e');
+    }
+    return null;
+  }
+
   /// WORKER HOUR TABLE
   Future<Map<dynamic, dynamic>?> addNewWorkerHour(
       {required WorkerHour workerHour, required String worker_id}) async {
@@ -214,13 +232,33 @@ class ServerHandler {
         body: {
           'worker_id': worker_id,
           'day': workerHour.day,
-          'start_hour': workerHour.startTime,
-          'finish_hour': workerHour.finishTime,
+          'start_hour': workerHour.startTime.toString(),
+          'finish_hour': workerHour.finishTime.toString(),
         },
       );
 
       Map<dynamic, dynamic> result = jsonDecode(response.body);
       print('result: $result');
+      return result;
+    } catch (e) {
+      print('Server Handler: Error : $e');
+    }
+    return null;
+  }
+
+  Future<Map<dynamic, dynamic>?> fetchWorkerHour(
+      {required String worker_id, required day}) async {
+    try {
+      http.Response response = await http.post(
+        Uri.parse('$_baseUrl/worker_hour/fetch_worker_hours_related_day.php'),
+        body: {
+          'worker_id': worker_id,
+          'day': day,
+        },
+      );
+
+      Map<dynamic, dynamic> result = jsonDecode(response.body);
+      print('result workerHour: $result');
       return result;
     } catch (e) {
       print('Server Handler: Error : $e');
@@ -280,7 +318,7 @@ class ServerHandler {
           'shop_id': shop_id,
           'service_name': service.serviceName,
           'price': service.price.toString(),
-          'work_hour': service.hourOfProcess,
+          'work_hour': service.hourOfProcess.toString(),
         },
       );
 
@@ -333,6 +371,25 @@ class ServerHandler {
     return null;
   }
 
+  Future<Map<dynamic, dynamic>?> changeWorkerFav(
+      {required String cus_id,
+      required String shop_id,
+      required String worker_id}) async {
+    try {
+      http.Response response = await http.post(
+        Uri.parse('$_baseUrl/favs/change_worker_fav.php'),
+        body: {'shop_id': shop_id, 'cus_id': cus_id, 'worker_id': worker_id},
+      );
+
+      Map<dynamic, dynamic> result = jsonDecode(response.body);
+      print('result: $result');
+      return result;
+    } catch (e) {
+      print('Server Handler: Error : $e');
+    }
+    return null;
+  }
+
   Future<Map<dynamic, dynamic>?> fetchOneShopFav(
       {required String cus_id, required String shop_id}) async {
     try {
@@ -353,12 +410,55 @@ class ServerHandler {
     return null;
   }
 
+  Future<Map<dynamic, dynamic>?> fetchOneWorkerFav(
+      {required String cus_id,
+      required String shop_id,
+      required String worker_id}) async {
+    try {
+      http.Response response = await http.post(
+        Uri.parse('$_baseUrl/favs/fetch_one_worker_fav.php'),
+        body: {
+          'shop_id': shop_id,
+          'cus_id': cus_id,
+          'worker_id': worker_id,
+        },
+      );
+
+      Map<dynamic, dynamic> result = jsonDecode(response.body);
+      print('result: $result');
+      return result;
+    } catch (e) {
+      print('Server Handler: Error : $e');
+    }
+    return null;
+  }
+
   Future<Map<dynamic, dynamic>?> countShopFav({required String shop_id}) async {
     try {
       http.Response response = await http.post(
         Uri.parse('$_baseUrl/favs/count_shop_fav.php'),
         body: {
           'shop_id': shop_id,
+        },
+      );
+
+      Map<dynamic, dynamic> result = jsonDecode(response.body);
+      print('result: $result');
+      return result;
+    } catch (e) {
+      print('Server Handler: Error : $e');
+    }
+    return null;
+  }
+
+  Future<Map<dynamic, dynamic>?> countWorkerFav(
+      {required String shop_id, required String worker_id}) async {
+    try {
+      http.Response response = await http.post(
+        Uri.parse('$_baseUrl/favs/count_worker_fav.php'),
+        body: {
+          'shop_id': shop_id,
+          'worker_id': worker_id,
         },
       );
 
@@ -419,6 +519,116 @@ class ServerHandler {
         Uri.parse('$_baseUrl/comment/count_comment.php'),
         body: {
           'shop_id': shop_id,
+        },
+      );
+
+      Map<dynamic, dynamic> result = jsonDecode(response.body);
+      print('result: $result');
+      return result;
+    } catch (e) {
+      print('Server Handler: Error : $e');
+    }
+    return null;
+  }
+
+  /// APPOINTMENT TABLE
+  Future<Map<dynamic, dynamic>?> fetchOneAppointment(
+      {required String shop_id,
+      required String worker_id,
+      required user_id,
+      required String date,
+      required String start_hour}) async {
+    try {
+      http.Response response = await http.post(
+        Uri.parse('$_baseUrl/appointment/fetch_one_appointment.php'),
+        body: {
+          'shop_id': shop_id,
+          'worker_id': worker_id,
+          'user_id': user_id,
+          'date': date,
+          'start_hour': start_hour,
+        },
+      );
+
+      Map<dynamic, dynamic> result = jsonDecode(response.body);
+      print('result: $result');
+      return result;
+    } catch (e) {
+      print('Server Handler: Error : $e');
+    }
+    return null;
+  }
+
+  Future<Map<dynamic, dynamic>?> fetchReservedAppointment(
+      {required String shop_id,
+      required String worker_id,
+      required String date,
+      required String start_hour}) async {
+    try {
+      http.Response response = await http.post(
+        Uri.parse('$_baseUrl/appointment/fetch_reserved_appointment.php'),
+        body: {
+          'shop_id': shop_id,
+          'worker_id': worker_id,
+          'date': date,
+          'start_hour': start_hour,
+        },
+      );
+
+      Map<dynamic, dynamic> result = jsonDecode(response.body);
+      print('result: $result');
+      return result;
+    } catch (e) {
+      print('Server Handler: Error : $e');
+    }
+    return null;
+  }
+
+  Future<Map<dynamic, dynamic>?> addAppointment({
+    required String shop_id,
+    required String worker_id,
+    required user_id,
+    required String date,
+    required String start_hour,
+    required String note,
+    required String price,
+    required String taken_hour,
+  }) async {
+    try {
+      http.Response response = await http.post(
+        Uri.parse('$_baseUrl/appointment/add_appointment.php'),
+        body: {
+          'shop_id': shop_id,
+          'worker_id': worker_id,
+          'user_id': user_id,
+          'date': date,
+          'start_hour': start_hour,
+          'note': note,
+          'price': price,
+          'taken_hour': taken_hour,
+        },
+      );
+
+      Map<dynamic, dynamic> result = jsonDecode(response.body);
+      print('result: $result');
+      return result;
+    } catch (e) {
+      print('Server Handler: Error : $e');
+    }
+    return null;
+  }
+
+  /// ORDER TABLE
+  Future<Map<dynamic, dynamic>?> addOrder({
+    required String app_id,
+    required String service_id,
+  }) async {
+    try {
+      http.Response response = await http.post(
+        Uri.parse('$_baseUrl/order/add_order.php'),
+        body: {
+          'app_id': app_id,
+          'service_id': service_id,
         },
       );
 
