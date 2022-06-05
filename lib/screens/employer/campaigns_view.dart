@@ -44,7 +44,7 @@ class _ServicesPageState extends State<ServicesPage> {
         isSelected: false),
     Campaigns(
         service_name: "Hair Cutting",
-        checked: true,
+        checked: false,
         fee: 30,
         discountItem: 'Select Discount',
         isSelected: false),

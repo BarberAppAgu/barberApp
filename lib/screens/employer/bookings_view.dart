@@ -17,21 +17,22 @@ class _BookingTrackState extends State<BookingTrack> {
   Color primaryColor = Color(0XFF83D1C3);
   var num = false;
   int i =0;
+  var barberName="Alaattin Ozturk";
   List<BookingDetails> bookingDetails = [
     BookingDetails(
         date: "28 May 2022, 8am - 10am",
         image: Image.asset("assets/image/1.jpg"),
         Barbername: "Ömer Akcan"),
     BookingDetails(
-        date: "28 May 2022, 8am - 10am",
+        date: "28 May 2022, 10am - 12am",
         image: Image.asset("assets/image/1.jpg"),
         Barbername: "Hamza Duman"),
     BookingDetails(
-        date: "28 May 2022, 8am - 10am",
+        date: "28 May 2022, 12pm - 1pm",
         image: Image.asset("assets/image/anonymous.jpg"),
         Barbername: "Kerem Keskin"),
     BookingDetails(
-        date: "28 May 2022, 8am - 10am",
+        date: "28 May 2022, 1pm - 2pm",
         image: Image.asset("assets/image/1.jpg"),
         Barbername: "Ismayil"),
   ];
@@ -50,54 +51,59 @@ class _BookingTrackState extends State<BookingTrack> {
         shape: Border(bottom: BorderSide(color: Colors.black, width: 2)),
       ),
       body: Center(
-        child: Column(
-          children: [
+        child: Expanded(
+          child: Column(
+            children: [
 
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Container(
-                margin: const EdgeInsets.fromLTRB(8.0, 20, 8, 20),
-                child: Text("WELCOME BACK!",
-                    style: GoogleFonts.inter(
-                        fontSize: 20, color: Color(0xFF7C99AC))),
-              ),
-            ),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Container(
-                margin: const EdgeInsets.fromLTRB(8.0, 0, 8, 8),
-                child: Text("COMPANY NAME",
-                    style: GoogleFonts.inter(
-                        fontSize: 24, fontWeight: FontWeight.bold)),
-              ),
-            ),
-
-            num == false ? LastBookingMethod(size, bookingDetails[i]) : LastBookingMethod(size, bookingDetails[i+1]),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text("Next Appointments",
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Container(
+                  height: size.height*0.04,
+                  margin: const EdgeInsets.fromLTRB(8.0, 20, 8, 20),
+                  child: Text("WELCOME BACK!",
                       style: GoogleFonts.inter(
-                          fontSize: 20, color: Color(0xFF7C99AC)))),
-            ),
-            Container(
-              height: 160,
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-
-
-                  return BookingMethod(
-                    size,
-                    bookingDetails[index+1],
-                  );
-                },
-                padding: EdgeInsets.all(8),
-                itemCount: bookingDetails.length-1,
+                          fontSize: 20, color: Color(0xFF7C99AC))),
+                ),
               ),
-            ),
-          ],
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Container(
+                  height: size.height*0.04,
+                  margin: const EdgeInsets.fromLTRB(8.0, 0, 8, 8),
+                  child: Text("${barberName}",
+                      style: GoogleFonts.inter(
+                          fontSize: 24, fontWeight: FontWeight.bold)),
+                ),
+              ),
+
+              num == false ? LastBookingMethod(size, bookingDetails[i]) : LastBookingMethod(size, bookingDetails[i+1]),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                    height: size.height*0.04,
+                    alignment: Alignment.centerLeft,
+                    child: Text("Next Appointments",
+                        style: GoogleFonts.inter(
+                            fontSize: 20, color: Color(0xFF7C99AC)))),
+              ),
+              Container(
+                height: size.height*0.3,
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+
+
+                    return BookingMethod(
+                      size,
+                      bookingDetails[index+1],
+                    );
+                  },
+                  padding: EdgeInsets.all(8),
+                  itemCount: bookingDetails.length-1,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -108,7 +114,7 @@ class _BookingTrackState extends State<BookingTrack> {
       padding: const EdgeInsets.all(8.0),
       child: Container(
         width: size.width * 4 / 5,
-        height: 200,
+        height: size.width*0.4,
         decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(color: Colors.black),
@@ -133,6 +139,7 @@ class _BookingTrackState extends State<BookingTrack> {
                 Container(
                     child: Container(
                   width: size.width * 4 / 5 - 2,
+
                   decoration: BoxDecoration(
                     color: Color(0xFF11468F),
                     borderRadius: BorderRadius.only(
@@ -169,58 +176,21 @@ class _BookingTrackState extends State<BookingTrack> {
                 )),
               ],
             ),
+
             Row(
+
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: CircleAvatar(
-                    backgroundImage: AssetImage("assets/image/anonymous.jpg"),
+                    backgroundImage: AssetImage("assets/image/1.jpg"),
                     radius: 25,
                   ),
                 ),
                 Text("Omer Akcan", style: GoogleFonts.inter(fontSize: size.height*0.03))
               ],
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                SizedBox(
-                  width: size.width * 3 / 10,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      primary: Color(0xFF11468F),
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        num = true;
-                      });
-                    },
-                    child: Text('Accept'),
-                  ),
-                ),
-                SizedBox(
-                  width: size.width * 3 / 10,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      primary: Color(0xFFD8D2CB),
-                    ),
-                    onPressed: () {
-                      // Respond to button press
-                    },
-                    child: Text(
-                      'Decline',
-                      style: TextStyle(color: Colors.black),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+
           ],
         ),
       ),
@@ -229,18 +199,19 @@ class _BookingTrackState extends State<BookingTrack> {
 
   BookingMethod(Size size, BookingDetails bookingDetails) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
       child: Container(
-        width: size.width * 4 / 5,
+
+        width: size.width*4/5,
         height: 60,
         decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(color: Colors.black),
           borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20),
-              topRight: Radius.circular(20),
-              bottomLeft: Radius.circular(20),
-              bottomRight: Radius.circular(20)),
+              topLeft: Radius.circular(100),
+              topRight: Radius.circular(100),
+              bottomLeft: Radius.circular(50),
+              bottomRight: Radius.circular(50)),
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(0.5),
@@ -251,6 +222,7 @@ class _BookingTrackState extends State<BookingTrack> {
           ],
         ),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -259,6 +231,7 @@ class _BookingTrackState extends State<BookingTrack> {
                 radius: 20,
               ),
             ),
+
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
@@ -281,23 +254,7 @@ class _BookingTrackState extends State<BookingTrack> {
             SizedBox(
               width: 10,
             ),
-            Row(
-              
-              children: [IconButton(
 
-                icon:Icon(Icons.check),
-                color: Colors.green, onPressed: () {  setState(() {
-                  print("true");
-                });},
-              ),
-                IconButton(
-
-                  icon:Icon(Icons.clear),
-                  color: Colors.red, onPressed: () {  setState(() {
-                  print("true");
-                });},
-                )],
-            ),
           ],
         ),
       ),

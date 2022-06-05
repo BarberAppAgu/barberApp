@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
+import 'Fav_comments.dart';
+
 
 
 class EmpHomeView extends StatefulWidget {
@@ -109,7 +111,7 @@ class _EmpHomeViewState extends State<EmpHomeView> {
                     SizedBox(height: height* 0.02),
 
                     GestureDetector(
-                      onTap: (){},
+                      onTap: (){Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Fav_Comments()));},
                       child: Container(
                         width: width*0.35,
                         height: height*0.20,
